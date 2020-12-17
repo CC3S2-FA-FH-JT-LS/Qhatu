@@ -8,7 +8,33 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import './BuscarTiendas.css';
+import ListaTiendas from './ListaTiendas';
+
+const useStylesGrid = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
+
+const FullWidthGrid = () => {
+  const classes = useStylesGrid();
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <ListaTiendas></ListaTiendas>
+      </Grid>
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NestedList = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -47,13 +73,22 @@ const NestedList = () => {
         <ListItemText primary="Calificacion" />
       </ListItem>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Inbox" />
+        <ListItemText primary="Productos" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
-            <ListItemText primary="Starred" />
+            <ListItemText primary="Arroz" />
+          </ListItem>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="Huevos" />
+          </ListItem>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="Golosinas" />
+          </ListItem>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="Carnes" />
           </ListItem>
         </List>
       </Collapse>
@@ -67,32 +102,21 @@ export default class BuscarTiendas extends Component {
 
     this.state = {
       buscando: false,
-      inputValue: ' ',
     };
 
     this.handleChangeBound = (event) => this.handleChange(event);
   }
 
   handleChange(event) {
-    if (event.target.value !== '') {
-      this.setState({ buscando: true, inputValue: event.target.value });
-    } else {
-      this.setState({ buscando: false, inputValue: event.target.value });
-    }
-    console.log(this.state.buscando);
+    console.log('HOLA');
+    this.setState({ buscando: !this.state.buscando });
   }
 
   render() {
     return (
-      <div>
-        <div className="left_div">
-          <input
-            id="inId"
-            type="text"
-            placeholder="Buscar tienda"
-            value={this.state.inputValue}
-            onChange={this.handleChangeBound}
-          />
+      <Grid container spacing={3}>
+        <Grid item xs={4}>
+          <Button onClick={this.handleChangeBound}>Buscar</Button>
           <NestedList></NestedList>
           <Button variant="contained" color="primary">
             Registrarse
@@ -100,9 +124,8 @@ export default class BuscarTiendas extends Component {
           <Button variant="contained" color="primary">
             Iniciar Sesión
           </Button>
-        </div>
-
-        <div className="right_div">
+        </Grid>
+        <Grid item xs={8}>
           {!this.state.buscando ? (
             <div>
               <span className="tittle">QHATU</span>
@@ -122,13 +145,10 @@ export default class BuscarTiendas extends Component {
               </div>
             </div>
           ) : (
-            <div>
-              <div>Tiendas</div>
-              <div>Imagenes de productos</div>
-            </div>
+            <FullWidthGrid></FullWidthGrid>
           )}
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }

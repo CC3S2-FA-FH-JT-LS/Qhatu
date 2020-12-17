@@ -17,6 +17,8 @@
     "material-ui-dropzone": "^3.5.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-modal": "^3.12.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "latest"
   },
   "browserslist": {

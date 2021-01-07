@@ -1,10 +1,7 @@
 const express = require('express');
-const router = express.Router();
+var api = express.Router();
+const consumidorControllers = require('../controllers/consumidor');
 
-router.get('/', (req, res) => {
-  res.json({
-    status: 'API works',
-  });
-});
+api.post('/registrar-consumidor', consumidorControllers.registrarConsumidor);
 
-module.exports = router;
+module.exports = api;

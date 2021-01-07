@@ -6,10 +6,14 @@ var port = 3800;
 //Conexion Database
 mongoose.Promise = global.Promise;
 mongoose
-  .connect('mongodb://localhost:27017/qhatuBackEnd', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    'mongodb+srv://userProyectoQhatu:softwareQhatu@yuma990.syj68.gcp.mongodb.net/qhatuDB?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    }
+  )
   .then(() => {
     console.log('Conectado');
 

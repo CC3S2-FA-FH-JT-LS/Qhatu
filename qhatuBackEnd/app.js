@@ -1,18 +1,20 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
 
 //cargar rutas
-var consumidorRouters = require('./routes/consumidor');
+const adminRouters = require('./routes/admin');
+const comercianteRouters = require('./routes/comerciante');
+const consumidorRouters = require('./routes/consumidor');
 
 //middlewares_ un metodo q se ejecute antes de llegar a un controlador
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//cors // configurar cabeceras http //Victor nos da este codigo en su pagina.
+//cors // configurar cabeceras http
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -26,6 +28,8 @@ app.use((req, res, next) => {
 });
 
 //rutas
+app.use('/api', adminRouters);
+app.use('/api', comercianteRouters);
 app.use('/api', consumidorRouters);
 //exportar
 module.exports = app;

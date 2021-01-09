@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var adminSchema = Schema(
   {
-    contraseña: { type: String },
-    nombre: { type: String },
+    contraseña: { type: String, required: true },
+    nombre: { type: String, required: true },
   },
   {
     collection: 'admin',

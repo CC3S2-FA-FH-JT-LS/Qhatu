@@ -9,6 +9,7 @@ const app = express();
 const adminRouters = require('./routes/admin');
 const comercianteRouters = require('./routes/comerciante');
 const consumidorRouters = require('./routes/consumidor');
+const registroRouters = require('./routes/registro');
 
 //middlewares_ un metodo q se ejecute antes de llegar a un controlador
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,5 +32,7 @@ app.use((req, res, next) => {
 app.use('/api', adminRouters);
 app.use('/api', comercianteRouters);
 app.use('/api', consumidorRouters);
+app.use('/api', registroRouters);
+
 //exportar
 module.exports = app;

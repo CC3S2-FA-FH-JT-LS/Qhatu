@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 
 var productoSchema = Schema(
   {
-    estado: String,
-    descripcion: String,
-    imagen: String,
-    nombre: String,
-    precio: Number,
+    estado: { type: String, required: true },
+    descripcion: { type: String, required: true },
+    imagen: { type: String },
+    nombre: { type: String, required: true },
+    precio: { type: Number, required: true },
   },
   {
     collection: 'productos',

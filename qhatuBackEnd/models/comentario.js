@@ -7,9 +7,10 @@ var comentarioSchema = Schema(
   {
     consumidorId: {
       type: Schema.ObjectId,
+      required: true,
       ref: 'consumidor',
     },
-    valoracion: Number,
+    valoracion: { type: Number, required: true },
     texto: String,
     tiendaId: {
       type: Schema.ObjectId,

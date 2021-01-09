@@ -4,46 +4,113 @@ const Comentarios = require('../models/comentario');
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 const Tienda = require('../models/tienda');
+const Producto = require('../models/producto');
+const tienda = require('../models/tienda');
 
-exports.registrarComerciante = async (req, res) => {
+exports.agregarProducto = async (req, res) => {
   const params = req.body;
-  const contacto = params.contacto;
-  const contraseña = params.contraseña;
+  const tiendaId = params.tiendaId;
+  const estado = params.estado;
+  const descripcion = params.descripcion;
   const nombre = params.nombre;
-  const nombreTienda = params.nombreTienda;
-  const nombreUsuario = params.nombreUsuario;
-
-  const categoria = params.categoria;
-  const imagen = params.imagen;
-  const informacionPuesto = params.informacionPuesto;
-  const numeroPuesto = params.numeroPuesto;
+  const precio = params.precio;
 
   try {
-    const comerciante = new Comerciante();
-    comerciante.contacto = contacto;
-    comerciante.contraseña = contraseña;
-    comerciante.nombre = nombre;
-    comerciante.nombreUsuario = nombreUsuario;
-    comerciante.nombreTienda = nombreTienda;
-    const nuevoComerciante = await comerciante.save();
+    const producto = new Producto();
+    producto.estado = estado;
+    producto.descripcion = descripcion;
+    producto.nombre = nombre;
+    producto.precio = precio;
 
-    const tienda = new Tienda();
-    tienda.categoria = categoria;
-    tienda.comercianteId = nuevoComerciante._id;
-    tienda.imagen = imagen;
-    tienda.informacionPuesto = informacionPuesto;
-    tienda.numeroPuesto = numeroPuesto;
-    const nuevaTienda = await tienda.save();
+    const nuevoProducto = await producto.save();
 
-    const comercianteActualizado = await Comerciante.findByIdAndUpdate(
-      nuevoComerciante._id,
-      { tiendaId: nuevaTienda._id },
+    const tiendaActualizada = await Tienda.findByIdAndUpdate(
+      tiendaId,
+      {
+        $push: { productos: nuevoProducto._id },
+      },
       { new: true }
     ).exec();
+    if (!tiendaActualizada) {
+      return res.status(400).json({
+        ok: false,
+        message: `Ocurrio un error actualizar la tienda: ${tiendaActualizada}.`,
+      });
+    }
     return res.status(200).json({
       ok: true,
-      comerciante: comercianteActualizado,
-      tienda: nuevaTienda,
+      tiendaActualizada,
+      nuevoProducto,
+    });
+  } catch (exception) {
+    return res.status(500).json({
+      ok: false,
+      message: `${exception}`,
+    });
+  }
+};
+
+exports.editarProducto = async (req, res) => {
+  const params = req.body;
+  const productoId = params.productoId;
+  const update = params.update;
+
+  try {
+    const productoEditado = await Producto.findByIdAndUpdate(
+      productoId,
+      update,
+      { new: true }
+    ).exec();
+    if (!productoEditado) {
+      return res.status(400).json({
+        ok: false,
+        message: `Ocurrio un error al editar el producto: ${productoId}.`,
+      });
+    }
+    return res.status(200).json({
+      ok: true,
+      productoEditado,
+    });
+  } catch (exception) {
+    return res.status(500).json({
+      ok: false,
+      message: `${exception}`,
+    });
+  }
+};
+
+exports.eliminarProducto = async (req, res) => {
+  const params = req.body;
+  const productoId = params.productoId;
+  const tiendaId = params.tiendaId;
+
+  try {
+    const tiendaActualizada = await Tienda.findByIdAndUpdate(
+      tiendaId,
+      {
+        $pull: { productos: productoId },
+      },
+      { new: true }
+    ).exec();
+    if (!tiendaActualizada) {
+      return res.status(400).json({
+        ok: false,
+        message: `Ocurrio un error actualizar la tienda: ${tiendaActualizada}.`,
+      });
+    }
+    const productoEliminado = await Producto.findByIdAndDelete(
+      productoId
+    ).exec();
+    if (!productoEliminado) {
+      return res.status(400).json({
+        ok: false,
+        message: `Ocurrio un error al eliminar el producto: ${productoId}.`,
+      });
+    }
+    return res.status(200).json({
+      ok: true,
+      tiendaActualizada,
+      productoEliminado,
     });
   } catch (exception) {
     return res.status(500).json({

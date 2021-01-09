@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 
 var comercianteSchema = Schema(
   {
-    contacto: String,
-    contraseña: String,
-    nombre: String,
-    nombreTienda: String,
-    nombreUsuario: String,
+    contacto: { type: String, required: true },
+    contraseña: { type: String, required: true },
+    nombre: { type: String, required: true },
+    nombreTienda: { type: String, required: true },
+    nombreUsuario: { type: String, required: true },
     tiendaId: { type: Schema.ObjectId, ref: 'tienda' },
   },
   {

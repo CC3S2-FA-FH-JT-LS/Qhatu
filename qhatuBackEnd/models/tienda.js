@@ -5,24 +5,24 @@ var Schema = mongoose.Schema;
 
 var tiendaSchema = Schema(
   {
-    categoria: String,
+    categoria: { type: String, required: true },
     comentarios: [
       {
         type: Schema.ObjectId,
-        ref: 'comentarios',
+        ref: 'comentario',
       },
     ],
     comercianteId: { type: Schema.ObjectId, ref: 'comerciante' },
     imagen: String,
-    informacionPuesto: String,
-    numeroPuesto: String,
+    informacionPuesto: { type: String, required: true },
+    numeroPuesto: { type: String, required: true },
     productos: [
       {
         type: Schema.ObjectId,
         ref: 'producto',
       },
     ],
-    valoracion: Number,
+    valoracion: { type: Number, default: 0 },
     visitas: { type: Number, default: 0 },
   },
   {

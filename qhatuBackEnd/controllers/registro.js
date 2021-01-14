@@ -2,6 +2,7 @@
 
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
+const Tienda = require('../models/tienda');
 
 exports.registrarComerciante = async (req, res) => {
   const params = req.body;

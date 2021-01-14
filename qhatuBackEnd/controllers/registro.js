@@ -1,5 +1,6 @@
 'use strict';
 
+const { findOne } = require('../models/comerciante');
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 const Tienda = require('../models/tienda');
@@ -24,6 +25,14 @@ exports.registrarComerciante = async (req, res) => {
     comerciante.nombre = nombre;
     comerciante.nombreUsuario = nombreUsuario;
     comerciante.nombreTienda = nombreTienda;
+    const unicoComerciante = await Comerciante.findOne({ nombreUsuario });
+    if (unicoComerciante) {
+      return res.status(200).json({
+        ok: false,
+        unico: false,
+        response: 'El usuario ya existe.',
+      });
+    }
     const nuevoComerciante = await comerciante.save();
 
     const tienda = new Tienda();
@@ -65,6 +74,14 @@ exports.registrarConsumidor = async (req, res) => {
     consumidor.nombreUsuario = nombreUsuario;
     consumidor.contraseña = contraseña;
     consumidor.imagen = imagen;
+    const unicoConsumidor = await Consumidor.findOne({ nombreUsuario });
+    if (unicoConsumidor) {
+      return res.status(200).json({
+        ok: false,
+        unico: false,
+        response: 'El usuario ya existe.',
+      });
+    }
     const nuevoConsumidor = await consumidor.save();
 
     return res.status(200).json({

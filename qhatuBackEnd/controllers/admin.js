@@ -2,6 +2,8 @@
 
 const Comentarios = require('../models/comentario');
 const Comerciante = require('../models/comerciante');
+const Consumidores = require('../models/consumidor');
+const Producto = require('../models/producto');
 const Tienda = require('../models/tienda');
 //metodo de pruebas
 
@@ -60,6 +62,38 @@ exports.eliminarComerciante = async (req, res) => {
     return res.status(200).json({
       ok: true,
       response: 'Success.',
+    });
+  } catch (exception) {
+    return res.status(500).json({
+      ok: false,
+      message: `${exception}`,
+    });
+  }
+};
+
+exports.obtenerEstadisticasAdmin = async (req, res) => {
+  try {
+    const tiendas = await Tienda.find({}).exec();
+    let visitas = 0;
+    let contactos = 0;
+    tiendas.forEach((element) => {
+      visitas += element.visitas;
+      contactos += element.contactos;
+    });
+    const consumidores = await Consumidores.countDocuments({}).exec();
+    const comentarios = await Comentarios.countDocuments({}).exec();
+    const productos = await Producto.countDocuments({}).exec();
+    const estadisticas = {};
+    estadisticas.comentarios = comentarios;
+    estadisticas.comerciantes = tiendas.length;
+    estadisticas.consumidores = consumidores;
+    estadisticas.contactos = contactos;
+    estadisticas.productos = productos;
+    estadisticas.visitas = visitas;
+
+    return res.status(200).json({
+      ok: true,
+      response: estadisticas,
     });
   } catch (exception) {
     return res.status(500).json({

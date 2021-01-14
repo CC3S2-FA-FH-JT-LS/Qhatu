@@ -13,6 +13,10 @@ var tiendaSchema = Schema(
       },
     ],
     comercianteId: { type: Schema.ObjectId, ref: 'comerciante' },
+    contactos: {
+      type: Number,
+      default: 0,
+    },
     imagen: String,
     informacionPuesto: { type: String, required: true },
     numeroPuesto: { type: String, required: true },

@@ -7,21 +7,45 @@ const Tienda = require('../models/tienda');
 
 exports.buscarTienda = async (req, res) => {
   const params = req.body;
-  const tienda = params.tienda;
+  const busqueda = params.busqueda;
   const filtro = params.filtro;
   // Filtro puede ser: nombre, producto, calificacion... etc.
 
-  console.log(params);
   try {
-    var re = new RegExp(tienda + '.*', 'g');
-    const tiendas = await Comerciante.find({
-      nombreTienda: { $in: [re] },
-    }).exec();
-    console.log(tiendas);
-  } catch (exception) {}
-};
+    if (filtro === 'nombre') {
+      const re = new RegExp(busqueda + '.*', 'g');
+      const tiendas = await Comerciante.find({
+        nombreTienda: { $in: [re] },
+      }).exec();
 
-exports.monstrarProductos = async (req, res) => {};
+      return res.status(200).json({
+        ok: true,
+        response: tiendas,
+      });
+    } else if (filtro === 'categoria') {
+      const tiendas = await Tienda.find({
+        categoria: busqueda,
+      }).exec();
+
+      return res.status(200).json({
+        ok: true,
+        response: tiendas,
+      });
+    } else if (filtro === 'calificacion') {
+      const tiendas = await Tienda.find({}).sort('-valoracion').exec();
+
+      return res.status(200).json({
+        ok: true,
+        response: tiendas,
+      });
+    }
+  } catch (exception) {
+    return res.status(500).json({
+      ok: false,
+      message: `${exception}`,
+    });
+  }
+};
 
 exports.dejarComentario = async (req, res) => {
   const params = req.body;
@@ -52,14 +76,11 @@ exports.dejarComentario = async (req, res) => {
       });
     }
     const antiguaValoracion = tiendaActualizada1.valoracion;
-    console.log(antiguaValoracion);
     const totalValoraciones = tiendaActualizada1.comentarios.length;
-    console.log(totalValoraciones);
     const nuevaValoracion = (
       (antiguaValoracion * (totalValoraciones - 1) + parseFloat(valoracion)) /
       totalValoraciones
     ).toFixed(2);
-    console.log(nuevaValoracion);
     const tiendaActualizada2 = await Tienda.findByIdAndUpdate(
       tiendaId,
       {
@@ -78,5 +99,10 @@ exports.dejarComentario = async (req, res) => {
       response: 'Success.',
       nuevoComentario,
     });
-  } catch (exception) {}
+  } catch (exception) {
+    return res.status(500).json({
+      ok: false,
+      message: `${exception}`,
+    });
+  }
 };

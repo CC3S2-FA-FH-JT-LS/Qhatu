@@ -5,15 +5,13 @@ var port = 3800;
 
 //Conexion Database
 mongoose.Promise = global.Promise;
+//mongodb+srv://userProyectoQhatu:softwareQhatu@yuma990.syj68.gcp.mongodb.net/qhatuDB?retryWrites=true&w=majority
 mongoose
-  .connect(
-    'mongodb+srv://userProyectoQhatu:softwareQhatu@yuma990.syj68.gcp.mongodb.net/qhatuDB?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect('mongodb://localhost:27017/qhatuDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log('Conectado');
 

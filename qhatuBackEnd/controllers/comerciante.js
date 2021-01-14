@@ -119,3 +119,5 @@ exports.eliminarProducto = async (req, res) => {
     });
   }
 };
+
+exports.eliminarCuenta = async (req, res) => {};

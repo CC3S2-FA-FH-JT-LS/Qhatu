@@ -5,6 +5,24 @@ const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 const Tienda = require('../models/tienda');
 
+exports.buscarTienda = async (req, res) => {
+  const params = req.body;
+  const tienda = params.tienda;
+  const filtro = params.filtro;
+  // Filtro puede ser: nombre, producto, calificacion... etc.
+
+  console.log(params);
+  try {
+    var re = new RegExp(tienda + '.*', 'g');
+    const tiendas = await Comerciante.find({
+      nombreTienda: { $in: [re] },
+    }).exec();
+    console.log(tiendas);
+  } catch (exception) {}
+};
+
+exports.monstrarProductos = async (req, res) => {};
+
 exports.dejarComentario = async (req, res) => {
   const params = req.body;
   const tiendaId = params.tiendaId;

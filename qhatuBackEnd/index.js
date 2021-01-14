@@ -5,9 +5,12 @@ var port = 3800;
 
 //Conexion Database
 mongoose.Promise = global.Promise;
-//mongodb+srv://userProyectoQhatu:softwareQhatu@yuma990.syj68.gcp.mongodb.net/qhatuDB?retryWrites=true&w=majority
+const urlDB =
+  'mongodb+srv://userQhatu:softwareQhatu@qhatu.5zrri.mongodb.net/qhatuDB?retryWrites=true&w=majority';
+//const urlDB = 'mongodb://localhost:27017/qhatuDB';
+
 mongoose
-  .connect('mongodb://localhost:27017/qhatuDB', {
+  .connect(urlDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

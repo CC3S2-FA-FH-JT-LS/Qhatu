@@ -5,7 +5,6 @@ const Comerciante = require('../models/comerciante');
 const Consumidores = require('../models/consumidor');
 const Producto = require('../models/producto');
 const Tienda = require('../models/tienda');
-//metodo de pruebas
 
 exports.getComerciantes = async (req, res) => {
   try {

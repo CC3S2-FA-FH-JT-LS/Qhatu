@@ -1,0 +1,10 @@
+.gradient-bg {
+    background-image: linear-gradient(-135deg,#021686 0%,#428BFF 100%);
+}
+.text-color{
+    color: #428BFF;
+}
+.basic-bg{
+    background-color: #428BFF !important ;
+}
+ 

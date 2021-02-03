@@ -4,9 +4,11 @@ const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 
 exports.login = async (req, res) => {
-  const params = req.body;
+  console.log("You make a get request")
+  const params = req.query;
+  console.log(params)
   const nombreUsuario = params.nombreUsuario;
-  const contraseña = params.contraseña;
+  const contraseña = params.password;
   let isConsumidor = true;
   let isComerciante = true;
   console.log(contraseña);

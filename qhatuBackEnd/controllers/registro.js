@@ -18,7 +18,7 @@ exports.registrarComerciante = async (req, res) => {
     mes: datetime.getMonth(),
     año: datetime.getFullYear()
   };
-  const imagencomerciante = params.imagencomerciante;
+  const imagencomerciante = params.imagen;
    // 1/2/21 mod
   const categoria = params.categoria;
   const imagen = params.imagen;

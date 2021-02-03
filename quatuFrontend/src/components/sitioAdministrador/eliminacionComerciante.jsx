@@ -53,6 +53,8 @@ class EliminacionComerciante extends React.Component {
   componentDidMount = () => {
     this._isMounted=true;
     axios.get("/api/get-comerciantes").then(response => {
+      console.log(response);
+      console.log(response.data);
       this.setState({
         valores:response.data.message
       });
@@ -76,7 +78,6 @@ class EliminacionComerciante extends React.Component {
       "nombreUsuario" : "lezar",
       "categoria" : "Electronica",
       "imagen" : "https://source.unsplash.com/random",
-      "imagencomerciante":"https://source.unsplash.com/random",
       "informacionPuesto" : "Innovaciones tecnologicas al alcanze de todos",
       "numeroPuesto" : "4321",
     };

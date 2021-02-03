@@ -2,6 +2,7 @@
   "name": "qhatuFrontend",
   "version": "4.0.0",
   "private": true,
+  "proxy" : "http://localhost:3800",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -12,6 +13,7 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "axios": "^0.21.1",
     "clsx": "latest",
     "fontsource-roboto": "^3.1.5",
     "material-ui-dropzone": "^3.5.0",

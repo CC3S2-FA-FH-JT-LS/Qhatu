@@ -34,8 +34,8 @@ exports.mostrarDetallesTienda = async (req, res) => {
 };
 
 exports.obtenerProductos = async (req, res) => {
-  const tiendaId = req.body.tiendaId;
-
+  //cambio 3/2/21
+  const tiendaId = req.query.tiendaId;
   try {
     const tienda = await Tienda.findById(tiendaId, { productos: 1 })
       .populate('productos')

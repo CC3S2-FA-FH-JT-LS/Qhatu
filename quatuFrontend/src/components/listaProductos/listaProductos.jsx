@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import 'fontsource-roboto';
 import "./listaProductos.css";
 import EditIcon from '@material-ui/icons/Edit';
-import values from "./modelData/listaProductos"
 import DeleteIcon from '@material-ui/icons/Delete';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,6 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import { green } from "@material-ui/core/colors";
 import Switch from "@material-ui/core/Switch";
 import { Link } from 'react-router-dom'
+import axios from "axios";
 
 
 const useStyles = theme => ({
@@ -52,10 +52,12 @@ class ListaProductos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valores:values.data(),
+      valores:[],
       inputValue: " ",
       showBool: false,
-      vistaCliente: (props.vistaCosumidor)
+      vistaCliente: (props.vistaCosumidor),
+      comercianteBool: true,
+      tiendaId: "600046678f25c125841686ad",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.toggleChecked = this.toggleChecked.bind(this);
@@ -93,6 +95,41 @@ class ListaProductos extends React.Component {
       }
     return listItems;
   }
+  componentDidMount = () => {
+    const tienda ={
+      "tiendaId" : this.state.tiendaId,
+    }
+    axios.get("http://localhost:3800/api/obtener-productos",{params: tienda}).then(res => {
+      this.setState({
+        valores:res.data.response.productos,
+      });
+    })
+    .catch(error => console.log(error));
+    /*
+    const producto={
+      tiendaId : this.state.tiendaId,
+      estado : "disponible",
+      descripcion : "Inorganico",
+      nombre : "Arroz Susan",
+      precio : 5.5
+    }
+    axios.post(`/api/add-producto`,producto).then(res => {
+      console.log(res);
+      console.log(res.data);
+    });*/
+  };
+  eliminar(id){
+    const dataProducto ={
+      "productoId" : id,
+      "tiendaId":this.state.tiendaId,
+    }
+    axios.delete("/api/delete-producto",{data: dataProducto})
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+    .catch(error => console.log(error));
+  }
   render() {
     const  {classes}  = this.props;
     return (
@@ -126,8 +163,8 @@ class ListaProductos extends React.Component {
             <div>
                 <Grid container spacing={3}>
                 {this.filtro().map((value) => (
-                    <Grid item key={value.id}  xs={12} sm={6} md={4} >
-                        <Card className={classes.value.id} id= {`cardOf${value.id}`}>
+                    <Grid item key={value._id}  xs={12} sm={6} md={4} >
+                        <Card className={classes.value._id} id= {`cardOf${value._id}`}>
                             <CardMedia
                                 className={classes.cardMedia}
                                 image = {value.imagen}
@@ -145,15 +182,17 @@ class ListaProductos extends React.Component {
                                 </Typography>   
                             </CardContent>
                             <CardActions>  
-                                <IconButton size="small" className={classes.cardButtonDelete} aria-label="like" onClick={() => {
+                                {this.state.comercianteBool && <IconButton size="small" className={classes.cardButtonDelete} aria-label="like" onClick={() => {
                                         if(this.state.valores.indexOf(value)>-1){
-                                            console.log(this.state.valores.indexOf(value));
+                                            console.log("Se elimino a " + value.nombre);
+                                            console.log("con id: " + value._id);
+                                            this.eliminar(value._id);
                                             this.state.valores.splice(this.state.valores.indexOf(value),1);
-                                            document.getElementById(`cardOf${value.id}`).style.visibility="hidden"
+                                            document.getElementById(`cardOf${value._id}`).style.visibility="hidden";
                                         }
                                     }}>
                                     <DeleteIcon />
-                                </IconButton >
+                                </IconButton >}
                                 <IconButton 
                                 size="small" 
                                 className={classes.cardButtonEdit} aria-label="like" 

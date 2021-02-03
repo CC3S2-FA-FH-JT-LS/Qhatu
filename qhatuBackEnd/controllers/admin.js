@@ -29,7 +29,6 @@ exports.getComerciantes = async (req, res) => {
 
 exports.eliminarComerciante = async (req, res) => {
   const comercianteId = req.body.comercianteId;
-
   try {
     const comercianteEliminado = await Comerciante.findByIdAndDelete(
       comercianteId

@@ -1,6 +1,5 @@
 'use strict';
 
-const { findOne } = require('../models/comerciante');
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 const Tienda = require('../models/tienda');

@@ -12,7 +12,9 @@ exports.mostrarDetallesTienda = async (req, res) => {
         $inc: { visitas: 1 },
       },
       { new: true }
-    ).exec();
+    )
+      .populate('comercianteId')
+      .exec();
     if (!tienda) {
       return res.status(500).json({
         ok: false,

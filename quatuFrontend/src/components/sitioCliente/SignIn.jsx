@@ -95,7 +95,11 @@ export default function SignIn() {
     var baseURL = `/api/login`;
     
     if(validateData()){
-        axios.get(baseURL,{params:{nombreUsuario:User.nombreUsuario,password:User.contraseña}})
+        axios.get(baseURL,
+          {parasm:{
+            nombreUsuario:User.nombreUsuario,
+            password:User.contraseña}
+          })
           .then(res => {
             console.log(res);
             console.log(res.data);

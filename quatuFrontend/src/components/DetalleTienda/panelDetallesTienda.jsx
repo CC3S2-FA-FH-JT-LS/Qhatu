@@ -54,21 +54,10 @@ const useStyles = makeStyles((theme) => ({
 export default function PanelDetallesTienda(props) {
 
 
-
   useEffect(() => {
     
     console.log("Antes de axios");
 
-
-    axios.get("/api/mostrar-detalles-tienda",
-      {params:{
-        tiendaId :"600046678f25c125841686ad"
-      }
-      }
-    ).then((res)=>{
-      console.log("obtenido: ");
-      console.log(res);
-    })
 
 
     axios.get("/api/obtener-comentarios",
@@ -89,8 +78,11 @@ export default function PanelDetallesTienda(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [comentar, setComentar] = React.useState(false);
-  const comentarios = TiendaModels.comentarios();
+  const comentarios = props.comentarios //TiendaModels.comentarios();
   const miTienda = props.tienda;
+  console.log("Desde panel:");
+  console.log(miTienda);
+
   const estadisticas = props.estadisticas;
 
   console.log(miTienda);

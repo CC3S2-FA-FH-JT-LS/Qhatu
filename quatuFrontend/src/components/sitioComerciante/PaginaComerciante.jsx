@@ -25,7 +25,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PaginaComerciante() {
-  
+  const [tiendaObtenida, setTiendaObtenida] = React.useState({valoracion:1});
+  const [comentariosObtenidos, setComentariosObtenidos] = React.useState([
+    {
+      id: 0,
+      valoracion: 5, //estrellas
+      fechaPublicacion:"10/12/20",
+      contenido:
+        "Integer suscipit libero cursus ante porta, in porta diam aliquam In vel.",
+      usuario:"Camila Perez",
+        imagen: "https://picsum.photos/seed/picsum/100",
+    },]
+    );
+
   useEffect(() => {
     
     console.log("Antes de axios");
@@ -40,15 +52,25 @@ export default function PaginaComerciante() {
       //console.log("obtenido: ");
       //console.log(res);
       let laTienda = res.data.response
+      let miComerciante = laTienda.comercianteId
+      //console.log( "La tieenda \n", laTienda);
+      //console.log( "El comercianteeee \n", miComerciante);
+      //console.log( "Mi id de tienda  \n", laTienda._id);
+      //console.log( "Mi valoracion de tienda  \n", laTienda.valoracion);
+      //console.log( "Mi descripcion de tienda  \n", laTienda.informacionPuesto);
+      //console.log( "Mi nombre de tienda  \n", miComerciante.nombreTienda);
       let miTienda = {
-                    id: 0,
-                    valoracion: 4, //estrellas
-                    nombre: "Tienda seño Maria",
-                    descripcion:laTienda.informacionPuesto,
-                    imagen:
-                      "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",
-                  }
-      console.log( "La tieenda \n", laTienda);
+        id: laTienda._id,
+        valoracion: parseInt(laTienda.valoracion) , //estrellas
+        nombre: miComerciante.nombreTienda,
+        descripcion:laTienda.informacionPuesto,
+        imagen:
+        "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",
+      }
+      
+      //console.log( "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+      //console.log(miTienda);
+      setTiendaObtenida(miTienda);
     })
 
 
@@ -60,6 +82,24 @@ export default function PaginaComerciante() {
   ).then((res)=>{
     console.log("mensajes: ");
     console.log(res);
+    console.log("Comentarios---------------------: ");
+    console.log(res.data.response.comentarios);
+    let losComentarios = res.data.response.comentarios
+    let arrComentarios = losComentarios.map((comen,index) => 
+      ({
+        id: index,
+        valoracion: comen.valoracion, //estrellas
+        fechaPublicacion : "10/12/20",
+        contenido : comen.texto,
+
+        usuario:"Camila Perez",
+          imagen: "https://picsum.photos/seed/picsum/100",
+      })
+      ) 
+
+      console.log("Formateados---------------------: ");
+      console.log(arrComentarios);
+      setComentariosObtenidos(arrComentarios);
   })
 
 
@@ -94,15 +134,8 @@ export default function PaginaComerciante() {
             >
               <Grid item xs={12}>
                 <PanelDetallesTienda
-                  tienda={{
-                    id: 0,
-                    valoracion: 4, //estrellas
-                    nombre: "Tienda seño Maria",
-                    descripcion:
-                      "Lo mejor al mejor precio. Encuentranos en el mercado La Aurora Avenida Emancipación 668",
-                    imagen:
-                      "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",
-                  }}
+                  tienda={tiendaObtenida}
+                  comentarios={comentariosObtenidos}
                   estadisticas={TiendaModels.estadisticasTiendaEjemplo()}
                 />
               </Grid>

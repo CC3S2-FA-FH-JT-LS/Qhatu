@@ -12,13 +12,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import "../../App.css";
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="textSecondary" align="center" >
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Qhatu's Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -31,7 +33,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white",
+    color: " #428BFF",
+    borderRadius: "20px",
+    border: '2px solid #428BFF',
+    padding: 20,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -43,14 +50,87 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  copyright: {
+    backgroundColor: "white"
   }
 }));
 
+
 export default function SignIn() {
   const classes = useStyles();
+  let history = useHistory();
+  const [User, setUser] = React.useState({nombreUsuario:"",contraseña:""});
+  const handleChange = (event) => {
+    var name = event.target.name;
+    var userdata={
+      ...User
+    }
+    userdata[name]=event.target.value;
+    setUser(userdata);
+    console.log(User)
+  };
 
+  const validateData = ()=>{
+    let isValid = true;
+    let isDataCompleted=true;
+    for (const attribute of Object.getOwnPropertyNames(User)) {
+      if(User[attribute].length===0){
+        alert("Ingrese el nombre de Usuario y contraseña");
+        isValid = false;
+        isDataCompleted = false;
+        break;
+      }
+    }
+    if(isDataCompleted){
+      if(User["contraseña"].length===0){
+        alert("Contraseña incorrecta")
+      }
+    }
+    return isValid;
+  }
+  const handleLogin=(event) => {
+    event.preventDefault(); 
+    var role="",id="", idTienda="";
+    var baseURL = `/api/login`;
+    
+    if(validateData()){
+        axios.get(baseURL,
+          {parasm:{
+            nombreUsuario:User.nombreUsuario,
+            password:User.contraseña}
+          })
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+            if(res.data.ok === false){
+              alert("Usuario o contraseña incorrecta");
+            }else if(res.data.ok){
+              alert("Login correcto");
+              console.log(res.data);
+              role=res.data.rol;
+              id = res.data.response._id;
+              idTienda = res.data.response.tiendaId;
+              console.log("role: "+role + " id: "+id);
+              localStorage.setItem('myRole',role);
+              localStorage.setItem('myId',id);
+              if(role==="comerciante"){
+                history.push('/comerciantes')
+              }else if(role === "consumidor"){
+                history.push('/consumidor')
+              }
+            }
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+    }else{
+      alert("Vuelva a intentarlo")
+    }
+  }
   return (
-    <Container component="main" maxWidth="xs">
+    <div className="gradient-bg">
+      <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -67,20 +147,22 @@ export default function SignIn() {
             fullWidth
             id="Name"
             label="Nombre"
-            name="Name"
+            name="nombreUsuario"
             autoComplete="Name"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="contraseña"
             label="Contraseña"
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -92,6 +174,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleLogin} 
           >
             Ingresar
           </Button>
@@ -102,16 +185,18 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/singUpComerciante" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
         </form>
+        <Box mt={8} >
+          <div><Copyright /></div>
+        </Box>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      
     </Container>
+    </div>
   );
 }

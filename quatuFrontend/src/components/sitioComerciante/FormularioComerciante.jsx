@@ -4,6 +4,8 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from '@material-ui/core/FormControl';
+import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -16,13 +18,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { DropzoneArea } from "material-ui-dropzone";
+import "../../App.css";
+import axios from 'axios';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://material-ui.com/" className="text-color">
+        Qhatu's website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -31,11 +35,18 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: 20,
+    backgroundColor: "white",
+    border: '2px solid #428BFF',
+    borderRadius: 20
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -47,32 +58,117 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  menuPaper: {
+    color: "#428BFF",
+    maxHeight: "50%"
   }
 }));
 
 export default function FormularioComerciante(props) {
   const classes = useStyles();
+  const names = ["abarrotes","carniceria","verduras","farmacia","dulceria","panaderia"];
   const initial_category = {
     categoria: props.comerciante.categoria
   };
-  const [category, setCategory] = React.useState(initial_category);
-
+  
+  const [checked, setChecked] = React.useState(false);
+  const [newUser, setUser] = React.useState(props.comerciante);
   const handleChange = (event) => {
-    let cat = event.target.value;
-    setCategory({ categoria: cat });
+    var name = event.target.name;
+    var userdata={
+      ...newUser
+    }
+    userdata[name]=event.target.value;
+    setUser(userdata);
   };
+  const handleTerminos = (event) =>{
+    event.preventDefault();
+    setChecked(event.target.checked);
+  }
+  const handleSubmit=(event) => {
+    event.preventDefault();
+    if(props.componentTitle !== "EditarCuenta" ){
+      if(validateData()){
+        axios.post("/api/registrar-comerciante", newUser )
+          .then(res => {
+            //console.log(res);
+            //console.log(res.data);
+            if(res.data.unico === false){
+              alert("El nombre de usuario ingresado ya existe");
+            }else if(res.data.ok){
+              alert("Usuario creado satisfactoriamente");
+            }
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+      }
+    }else{
+      if(validateData()){
+        axios.put("/api/registrar-comerciante", newUser )
+          .then(res => {
+            //console.log(res);
+            //console.log(res.data);
+            if(res.data.unico === false){
+              alert("El nombre de usuario ingresado ya existe");
+            }else if(res.data.ok){
+              alert("Usuario creado satisfactoriamente");
+            }
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+      }
+    }
+  }
+
+  const validateData = ()=>{
+    let isValid = true;
+    let isDataCompleted=true;
+    for (const attribute of Object.getOwnPropertyNames(newUser)) {
+      if(newUser[attribute].length===0){
+        alert("Debes completar todos los campos");
+        isValid = false;
+        isDataCompleted = false;
+        break;
+      }
+    }
+    if(isDataCompleted){
+      if(!checked){
+        alert("Por favor acepte los terminos y condiciones");
+        isValid = false;
+      }
+      if(newUser["contraseña"].length <8){
+        alert("La contraseña debe tener mas de 8 caracteres");
+        isValid = false;
+      }
+      if(newUser["contraseña"] !== newUser["confirmar_contraseña"]){
+        alert("Las contraseñas deben coincidir")
+        isValid = false;
+      }
+      
+    }
+    
+    return isValid;
+  }
+
   const deleteButton = props.showDelBut;
   const comerciante = props.comerciante;
   const nameComponent = props.componentTitle;
   const buttonName = function () {
-    if (nameComponent === "Editar Cuenta Comerciante") {
+    if (nameComponent === "EditarCuenta") {
       return "Guardar Cambios";
     } else {
       return "Registrarse";
     }
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={`${classes.container} text-color`}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -81,13 +177,13 @@ export default function FormularioComerciante(props) {
         <Typography component="h1" variant="h5">
           {nameComponent}
         </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
+        <form className={`${classes.form} text-color`} noValidate>
+          <Grid container spacing={2} >
+            <Grid item xs={12} sm={12} >
               <TextField
                 autoComplete="Nombre"
                 //autoFocus="true"
-                name="Nombre"
+                name="nombre"
                 variant="outlined"
                 required
                 fullWidth
@@ -95,18 +191,20 @@ export default function FormularioComerciante(props) {
                 label="Nombre"
                 defaultValue={comerciante.nombre}
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="Nombre_Usuario"
-                name="Nombre_usuario"
+                name="nombreUsuario"
                 variant="outlined"
                 required
                 fullWidth
                 id="Nickname"
                 label="Nombre de Usuario"
                 defaultValue={comerciante.nombreUsuario}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,12 +212,13 @@ export default function FormularioComerciante(props) {
                 variant="outlined"
                 required
                 fullWidth
-                name="Contraseña"
+                name="contraseña"
                 label="Contraseña"
                 type="password"
                 id="Contraseña"
                 autoComplete="current-password"
                 defaultValue={comerciante.contraseña}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,11 +226,25 @@ export default function FormularioComerciante(props) {
                 variant="outlined"
                 required
                 fullWidth
-                name="Confirm_contraseña"
+                name="confirmar_contraseña"
                 label="Confirmar contraseña"
                 type="password"
-                id="Contraseña"
+                id="Confirmar_Contraseña"
                 autoComplete="current-password"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                autoComplete="Nombre_Tienda"
+                name="nombreTienda"
+                variant="outlined"
+                required
+                fullWidth
+                id="Tienda"
+                label="Nombre de Tienda"
+                defaultValue={comerciante.nombreTienda}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -139,24 +252,27 @@ export default function FormularioComerciante(props) {
                 variant="outlined"
                 required
                 fullWidth
-                name="Contacto"
+                name="contacto"
                 label="Contacto"
                 type="number"
                 id="Contacto"
                 autoComplete="Contacto"
                 defaultValue={comerciante.contacto}
+                onChange={handleChange}
               />
             </Grid>
+            
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="NumPuesto"
+                name="numeroPuesto"
                 label="Numero de Puesto"
                 id="NumPuesto"
                 autoComplete="NumPuesto"
-                defaultValue={comerciante.puesto}
+                defaultValue={comerciante.numeroPuesto}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -166,28 +282,33 @@ export default function FormularioComerciante(props) {
                 multiline
                 rows={2}
                 rowsMax={8}
-                name="InfoPuesto"
-                label="Información de Puesto (opcional)"
+                name="informacionPuesto"
+                label="Información de Puesto"
                 id="InfoPuesto"
                 autoComplete="InfoPuesto"
-                defaultValue={comerciante.informacion}
+                defaultValue={comerciante.informacionPuesto}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <InputLabel id="categoriaTienda">Categoria</InputLabel>
-              <Select
-                labelId="categoriaTienda"
-                id="select"
-                value={category.categoria}
-                onChange={handleChange}
-              >
-                <MenuItem value="abarrotes">Abarrotes</MenuItem>
-                <MenuItem value="carnes">Carnes</MenuItem>
-                <MenuItem value="farmacia">Farmacia</MenuItem>
-                <MenuItem value="verduras">Verduras</MenuItem>
-                <MenuItem value="pollos">Pollos</MenuItem>
-                <MenuItem value="pescados">Pescados</MenuItem>
-              </Select>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="categoriaTienda">Categoria</InputLabel>
+                <Select
+                  name="categoria"
+                  labelId="categoriaTienda"
+                  id="select"
+                  value={newUser.categoria}
+                  onChange={handleChange}
+                  MenuProps={{ classes: { paper: classes.menuPaper } }}
+                >
+                 
+                  {names.map((name) => (
+                    <MenuItem  key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <DropzoneArea
@@ -197,7 +318,7 @@ export default function FormularioComerciante(props) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox value="allowExtraEmails" color="primary" onChange={handleTerminos}/>}
                 label="Acepto cumplir con las normas establecidas por el Sistema Qhatu"
               />
             </Grid>
@@ -207,7 +328,8 @@ export default function FormularioComerciante(props) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={`${classes.submit} basic-bg`}
+            onClick={handleSubmit}
           >
             {buttonName()}
           </Button>
@@ -215,7 +337,7 @@ export default function FormularioComerciante(props) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.delete}
+            className={`${classes.delete} basic-bg`}
             style={{ visibility: deleteButton }}
           >
             Eliminar Cuenta
@@ -230,7 +352,7 @@ export default function FormularioComerciante(props) {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
+        <Copyright/>
       </Box>
     </Container>
   );
@@ -242,9 +364,10 @@ FormularioComerciante.defaultProps = {
     nombre: "",
     nombreUsuario: "",
     contacto: "",
-    puesto: "",
-    informacion: "",
-    categoria: "",
-    imagen: ""
+    numeroPuesto: "",
+    nombreTienda: "",
+    informacionPuesto: "",
+    categoria: "abarrotes",
+    imagen: "https://source.unsplash.com/random",
   }
 };

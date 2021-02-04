@@ -11,7 +11,15 @@ exports.registrarComerciante = async (req, res) => {
   const nombre = params.nombre;
   const nombreTienda = params.nombreTienda;
   const nombreUsuario = params.nombreUsuario;
-
+  // 1/2/21 mod
+  var datetime = new Date();
+  const fCreacion ={ 
+    dia: datetime.getDate(), 
+    mes: datetime.getMonth(),
+    año: datetime.getFullYear()
+  };
+  const imagencomerciante = params.imagen;
+   // 1/2/21 mod
   const categoria = params.categoria;
   const imagen = params.imagen;
   const informacionPuesto = params.informacionPuesto;
@@ -24,6 +32,10 @@ exports.registrarComerciante = async (req, res) => {
     comerciante.nombre = nombre;
     comerciante.nombreUsuario = nombreUsuario;
     comerciante.nombreTienda = nombreTienda;
+    // 1/2/21 mod
+    comerciante.imagen=imagencomerciante;
+    comerciante.fCreacion=fCreacion;
+    // 1/2/21 mod    
     const unicoComerciante = await Comerciante.findOne({ nombreUsuario });
     if (unicoComerciante) {
       return res.status(200).json({
@@ -53,6 +65,7 @@ exports.registrarComerciante = async (req, res) => {
       tienda: nuevaTienda,
     });
   } catch (exception) {
+    console.log(exception);
     return res.status(500).json({
       ok: false,
       message: `${exception}`,

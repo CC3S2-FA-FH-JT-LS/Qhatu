@@ -48,7 +48,7 @@ export default function Comentario(props) {
               ></Avatar>
             }
             title={contenido.usuario}
-            subheader={contenido.fechaPublicacion}
+            //subheader={contenido.fechaPublicacion}
           />
           <CardContent>
             <Rating name="read-only" value={contenido.valoracion} readOnly />

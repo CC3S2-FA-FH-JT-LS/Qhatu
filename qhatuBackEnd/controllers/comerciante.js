@@ -23,7 +23,6 @@ exports.agregarProducto = async (req, res) => {
     producto.precio = precio;
 
     const nuevoProducto = await producto.save();
-
     const tiendaActualizada = await Tienda.findByIdAndUpdate(
       tiendaId,
       {
@@ -43,6 +42,7 @@ exports.agregarProducto = async (req, res) => {
       nuevoProducto,
     });
   } catch (exception) {
+    console.log(exception);
     return res.status(500).json({
       ok: false,
       message: `${exception}`,

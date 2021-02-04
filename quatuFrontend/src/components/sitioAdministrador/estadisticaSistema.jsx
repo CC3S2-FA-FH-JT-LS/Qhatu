@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import 'fontsource-roboto';
 import "./estadisticaSistema.css";
-import values from "./modelData/estadisticaSistema"
 
+import axios from "axios";
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
@@ -25,9 +25,17 @@ class EstadisticaSistema extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valores:values.data()
+      //valores:values.data()
+      valores:"Not loaded"
     };
   }
+  componentDidMount = () => {
+    axios.get("/api/obtener-estadisticas-admin").then(response => {
+      this.setState({
+        valores:response.data.response
+      });
+    });
+  };
   render() {
     const  {classes}  = this.props;
     return (
@@ -43,22 +51,22 @@ class EstadisticaSistema extends React.Component {
               <Grid container spacing={3}>
 
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Cantidad de usuarios comerciantes:{this.state.valores[0]}</Paper>
+                  <Paper className={classes.paper}>Cantidad de comentarios totales:{this.state.valores.comentarios}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Productos vistos por visita en promedio:{this.state.valores[1]}</Paper>
+                  <Paper className={classes.paper}>Cantidad de usuarios comerciantes:{this.state.valores.comerciantes}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Visitas en promedio por comerciante:{this.state.valores[2]}</Paper>
+                  <Paper className={classes.paper}>Cantidad de usuarios consumidores:{this.state.valores.consumidores}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Cantidad de usuarios comerciantes:{this.state.valores[3]}</Paper>
+                  <Paper className={classes.paper}>Cantidad de contactos concretados:{this.state.valores.contactos}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Tiempo de visita en promedio:{this.state.valores[4]}</Paper>
+                  <Paper className={classes.paper}>Cantidad de productos:{this.state.valores.productos}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Visitas totales al sitio web:{this.state.valores[5]}</Paper>
+                  <Paper className={classes.paper}>Visitas totales al sitio web:{this.state.valores.visitas}</Paper>
                 </Grid>
                
               </Grid>

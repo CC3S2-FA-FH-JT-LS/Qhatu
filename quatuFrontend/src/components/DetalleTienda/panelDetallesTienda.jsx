@@ -18,6 +18,8 @@ import Grid from "@material-ui/core/Grid";
 import Comentario from "./comentario";
 import TablaEstadisticasComerciante from "./tablaEstadicticasComenciante";
 import CajaValoracion from "../sitioCliente/cajaValoracion"
+import { useEffect, useState } from 'react';
+import axios from "axios";
 
 import TiendaModels from "./modelData/tienda";
 const useStyles = makeStyles((theme) => ({
@@ -50,11 +52,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PanelDetallesTienda(props) {
+
+
+  useEffect(() => {
+    
+    console.log("Antes de axios");
+
+
+
+    axios.get("/api/obtener-comentarios",
+    {params:{
+      tiendaId :"600046678f25c125841686ad"
+    }
+    }
+  ).then((res)=>{
+    console.log("mensajes: ");
+    console.log(res);
+  })
+
+
+    console.log("-----------------------------");
+  }, []);
+
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [comentar, setComentar] = React.useState(false);
-  const comentarios = TiendaModels.comentarios();
+  const comentarios = props.comentarios //TiendaModels.comentarios();
   const miTienda = props.tienda;
+  console.log("Desde panel:");
+  console.log(miTienda);
+
   const estadisticas = props.estadisticas;
 
   console.log(miTienda);

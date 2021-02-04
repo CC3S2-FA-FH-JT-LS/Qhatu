@@ -5,7 +5,6 @@ const Tienda = require('../models/tienda');
 exports.mostrarDetallesTienda = async (req, res) => {
   const tiendaId = req.query.tiendaId;
 
-  console.log("Peticion de tienda " + tiendaId);
   try {
     const tienda = await Tienda.findByIdAndUpdate(
       tiendaId,

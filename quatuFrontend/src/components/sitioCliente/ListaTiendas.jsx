@@ -45,14 +45,12 @@ class ListaTiendas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valores: values.data(),
+      valores: props.tiendas.tiendas,
       inputValue: ' ',
       mostrarDetalles: true,
+      tiendaId: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleClickChangeVerDetalles = this.handleClickChangeVerDetalles.bind(
-      this
-    );
   }
   handleInputChange(event) {
     this.setState({
@@ -60,10 +58,7 @@ class ListaTiendas extends React.Component {
       inputValue: event.target.value,
     });
   }
-  handleClickChangeVerDetalles(event) {
-    this.setState({ mostrarDetalles: !this.state.mostrarDetalles });
-    console.log(this.state.mostrarDetalles);
-  }
+
   filtro() {
     const listItems = [];
     var j = 0;
@@ -118,7 +113,7 @@ class ListaTiendas extends React.Component {
                         <Card className={classes.value.id} id={`cardOf${value.id}`}>
                           <CardMedia
                             className={classes.cardMedia}
-                            image={value.image}
+                            image={value.imagen}
                             title={value.nombre}
                           />
                           <CardContent className={classes.cardContent}>
@@ -126,15 +121,22 @@ class ListaTiendas extends React.Component {
                               {value.nombre}
                             </Typography>
                             <Typography>
-                              Creado el: {value.fCreacion[0]}/{value.fCreacion[1]}/
-                              {value.fCreacion[2]}
+                              Creado el: {value.fCreacion.dia}/{value.fCreacion.mes}/
+                              {value.fCreacion.año}
                             </Typography>
                           </CardContent>
                           <CardActions>
                             <IconButton
                               className={classes.cardButton}
                               aria-label="like"
-                              onClick={this.handleClickChangeVerDetalles}
+                              onClick={() => {
+                                this.setState({
+                                  tiendaId: value.tiendaId
+                                })
+                                console.log('DSADSADADASDASDADSDSASADS',value.tiendaId);
+                                this.setState({ mostrarDetalles: !this.state.mostrarDetalles });
+                                console.log(this.state.mostrarDetalles);
+                              }}
                             >
                               <DescriptionIcon /> Ver detalles
                             </IconButton>
@@ -150,7 +152,7 @@ class ListaTiendas extends React.Component {
           :
           (
             <div>
-              <PaginaTienda/>
+              <PaginaTienda tiendaId={this.state.tiendaId}/>
             </div>
           )
         }

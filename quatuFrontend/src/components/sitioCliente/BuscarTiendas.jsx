@@ -14,6 +14,8 @@ import './BuscarTiendas.css';
 import ListaTiendas from './ListaTiendas';
 import { Link } from 'react-router-dom';
 import '../../commons/commons.css';
+import axios from 'axios';
+
 const useStylesGrid = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -25,13 +27,13 @@ const useStylesGrid = makeStyles((theme) => ({
   },
 }));
 
-const FullWidthGrid = () => {
+const FullWidthGrid = (tiendas) => {
   const classes = useStylesGrid();
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <ListaTiendas></ListaTiendas>
+        <ListaTiendas tiendas = {tiendas}></ListaTiendas>
       </Grid>
     </div>
   );
@@ -104,6 +106,7 @@ export default class BuscarTiendas extends Component {
 
     this.state = {
       buscando: false,
+      tiendas: []
     };
 
     this.handleChangeBound = (event) => this.handleChange(event);
@@ -112,6 +115,16 @@ export default class BuscarTiendas extends Component {
   handleChange(event) {
     this.setState({ buscando: !this.state.buscando });
   }
+
+  componentDidMount = () => {
+    axios.get("/api/get-comerciantes").then(res => {
+      this.setState({
+        tiendas: res.data.message
+      });
+      console.log(this.state.tiendas);
+    })
+    .catch(error => console.log(error));
+  };
 
   render() {
     return (
@@ -145,7 +158,7 @@ export default class BuscarTiendas extends Component {
               </div>
             </div>
           ) : (
-            <FullWidthGrid></FullWidthGrid>
+            <FullWidthGrid tiendas = {this.state.tiendas}></FullWidthGrid>
           )}
         </Grid>
       </Grid>

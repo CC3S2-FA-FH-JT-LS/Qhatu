@@ -16,7 +16,6 @@ exports.mostrarDetallesTienda = async (req, res) => {
       .populate('comercianteId')
       .exec();
     if (!tienda) {
-      console.log("Primer 500");
       return res.status(500).json({
         ok: false,
         response: 'Ocurrio un error al buscar la tienda',
@@ -27,7 +26,7 @@ exports.mostrarDetallesTienda = async (req, res) => {
       response: tienda,
     });
   } catch (exception) {
-    console.log("Segundo 500");
+    console.log('Segundo 500');
 
     return res.status(500).json({
       ok: false,

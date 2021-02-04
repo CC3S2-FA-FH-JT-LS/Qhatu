@@ -3,8 +3,7 @@
 const Tienda = require('../models/tienda');
 
 exports.mostrarDetallesTienda = async (req, res) => {
-  const tiendaId = req.body.tiendaId;
-
+  const tiendaId = req.query.tiendaId;
   try {
     const tienda = await Tienda.findByIdAndUpdate(
       tiendaId,

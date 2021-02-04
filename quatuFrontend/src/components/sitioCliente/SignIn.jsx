@@ -110,6 +110,7 @@ export default function SignIn() {
               console.log("role: "+role + " id: "+id);
               localStorage.setItem('myRole',role);
               localStorage.setItem('myId',id);
+              localStorage.setItem('myStore',id);
               if(role==="comerciante"){
                 history.push('/comerciantes')
               }else if(role === "consumidor"){

@@ -3,18 +3,20 @@ import FormularioComerciante from "./FormularioComerciante";
 import ComercianteModels from "./modelData/Comerciante";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+//import AppBarNav from "./AppBarNav";
 class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      User:{nombre:"Freider"}
+      User:{}
     };
     this.handleMount = this.handleMount.bind(this);
   }
-  handleMount(event,data){
+  handleMount(data){
     console.log(data)
     this.setState({User:data});
+    console.log("-------");
+    console.log(this.state.User);
   }
   componentDidMount(){
     var data={};
@@ -28,8 +30,8 @@ class Test extends React.Component {
       }
       }
       ).then((res)=>{
-        //console.log("obtenido: ");
-        //console.log(res.data);
+        console.log("obtenido: ");
+        console.log(res.data);
 
         let datosTienda = res.data.response
         let comerciante = datosTienda.comercianteId
@@ -52,6 +54,9 @@ class Test extends React.Component {
         //setComerciante(data);
       })
       .then(()=>{
+        console.log("data in setting state");
+        console.log(data);
+        /* this.setState({User:data}) */
         this.handleMount(data);
         //this.setState({User:data});
         //this.render();
@@ -60,7 +65,9 @@ class Test extends React.Component {
       .catch(error => {
         console.error('There was an error!', error);
       });
-      
+      //console.log("data after get");
+      //console.log(data);
+      //this.handleMount(data);
     }    
   }
   
@@ -182,6 +189,7 @@ export default function EditarCuenta() {
   }, [data]) */
   //const comerciante = ComercianteModels.comercianteEjemplo();
   return (
+    
     <div>
       <Test></Test>;
     </div>

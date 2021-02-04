@@ -77,9 +77,9 @@ export default function FormularioComerciante(props) {
   const initial_category = {
     categoria: props.comerciante.categoria
   };
-  
+  var comerciante = props.comerciante;
   const [checked, setChecked] = React.useState(false);
-  const [newUser, setUser] = React.useState(props.comerciante);
+  const [newUser, setUser] = React.useState(comerciante);
   console.log("Nuevo usuario")
   console.log(newUser);
   const handleChange = (event) => {
@@ -163,7 +163,10 @@ export default function FormularioComerciante(props) {
   }
 
   const deleteButton = props.showDelBut;
-  const comerciante = props.comerciante;
+  //var comerciante = props.comerciante;
+  console.log("--comerciante--");
+  console.log(newUser);
+  console.log("--comerciante--");
   const nameComponent = props.componentTitle;
   const buttonName = function () {
     if (nameComponent === "EditarCuenta") {

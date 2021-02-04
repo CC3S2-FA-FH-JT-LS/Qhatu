@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { DropzoneArea } from "material-ui-dropzone";
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -48,7 +50,73 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUpConsumidor() {
+  let history = useHistory();
   const classes = useStyles();
+  const [checked, setChecked] = React.useState(false);
+  const [newUser, setUser] = React.useState({});
+  const handleChange = (event) => {
+    var name = event.target.name;
+    var userdata={
+      ...newUser
+    }
+    userdata[name]=event.target.value;
+    setUser(userdata);
+  };
+  const handleTerminos = (event) =>{
+    event.preventDefault();
+    setChecked(event.target.checked);
+  }
+  const validateData = ()=>{
+    let isValid = true;
+    let isDataCompleted=true;
+    for (const attribute of Object.getOwnPropertyNames(newUser)) {
+      if(newUser[attribute].length===0){
+        alert("Debes completar todos los campos");
+        isValid = false;
+        isDataCompleted = false;
+        break;
+      }
+    }
+    if(isDataCompleted){
+      if(!checked){
+        alert("Por favor acepte los terminos y condiciones");
+        isValid = false;
+      }
+      if(newUser["contraseña"].length <8){
+        alert("La contraseña debe tener mas de 8 caracteres");
+        isValid = false;
+      }
+      if(newUser["contraseña"] !== newUser["confirmar_contraseña"]){
+        alert("Las contraseñas deben coincidir")
+        isValid = false;
+      }
+      
+    }
+    
+    return isValid;
+  }
+  const handleSubmit=(event) => {
+    event.preventDefault();
+    if(validateData()){
+      newUser["imagen"]="newImage";
+      axios.post("/api/registrar-consumidor", newUser )
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          if(res.data.unico === false){
+            alert("El nombre de usuario ingresado ya existe");
+          }else if(res.data.ok){
+            alert("Usuario creado satisfactoriamente");
+            history.push('/consumidor');
+          }
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+    }
+  
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,13 +133,27 @@ export default function SignUpConsumidor() {
             <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="Nombre"
-                name="Nombre"
+                name="nombre"
                 variant="outlined"
                 required
                 fullWidth
                 id="NombreConsumidor"
                 label="Nombre"
                 autoFocus
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                autoComplete="NombreUsuario"
+                name="nombreUsuario"
+                variant="outlined"
+                required
+                fullWidth
+                id="NombreConsumidorUsuario"
+                label="Nombre de Usuario(Nickname)"
+                autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -79,11 +161,12 @@ export default function SignUpConsumidor() {
                 variant="outlined"
                 required
                 fullWidth
-                name="Contraseña"
+                name="contraseña"
                 label="Contraseña"
                 type="password"
                 id="Contraseña"
                 autoComplete="current-password"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,11 +174,12 @@ export default function SignUpConsumidor() {
                 variant="outlined"
                 required
                 fullWidth
-                name="Confirm_contraseña"
+                name="confirmar_contraseña"
                 label="Confirmar contraseña"
                 type="password"
-                id="Contraseña"
+                id="confirmar_contraseña"
                 autoComplete="current-password"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,6 +192,7 @@ export default function SignUpConsumidor() {
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="Acepto cumplir con las normas establecidas por el Sistema Qhatu"
+                onChange={handleTerminos}
               />
             </Grid>
           </Grid>
@@ -117,6 +202,7 @@ export default function SignUpConsumidor() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Registrarse
           </Button>

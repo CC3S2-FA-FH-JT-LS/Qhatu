@@ -20,6 +20,7 @@ import Select from "@material-ui/core/Select";
 import { DropzoneArea } from "material-ui-dropzone";
 import "../../App.css";
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -70,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormularioComerciante(props) {
+  let history = useHistory();
   const classes = useStyles();
   const names = ["abarrotes","carniceria","verduras","farmacia","dulceria","panaderia"];
   const initial_category = {
@@ -78,6 +80,8 @@ export default function FormularioComerciante(props) {
   
   const [checked, setChecked] = React.useState(false);
   const [newUser, setUser] = React.useState(props.comerciante);
+  console.log("Nuevo usuario")
+  console.log(newUser);
   const handleChange = (event) => {
     var name = event.target.name;
     var userdata={
@@ -102,6 +106,7 @@ export default function FormularioComerciante(props) {
               alert("El nombre de usuario ingresado ya existe");
             }else if(res.data.ok){
               alert("Usuario creado satisfactoriamente");
+              history.push('/comerciantes');
             }
           })
           .catch(error => {

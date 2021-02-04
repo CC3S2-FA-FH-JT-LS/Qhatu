@@ -4,6 +4,7 @@ const Tienda = require('../models/tienda');
 
 exports.mostrarDetallesTienda = async (req, res) => {
   const tiendaId = req.query.tiendaId;
+
   try {
     const tienda = await Tienda.findByIdAndUpdate(
       tiendaId,
@@ -25,6 +26,8 @@ exports.mostrarDetallesTienda = async (req, res) => {
       response: tienda,
     });
   } catch (exception) {
+    console.log('Segundo 500');
+
     return res.status(500).json({
       ok: false,
       message: `${exception}`,
@@ -58,7 +61,7 @@ exports.obtenerProductos = async (req, res) => {
 };
 
 exports.obtenerComentarios = async (req, res) => {
-  const tiendaId = req.body.tiendaId;
+  const tiendaId = req.query.tiendaId;
 
   try {
     const tienda = await Tienda.findById(tiendaId, { comentarios: 1 })

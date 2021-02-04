@@ -12,9 +12,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import './BuscarTiendas.css';
 import ListaTiendas from './ListaTiendas';
-import { Link } from 'react-router-dom'
-
-
+import { Link } from 'react-router-dom';
+import '../../commons/commons.css';
 const useStylesGrid = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
-  
+
   nested: {
     paddingLeft: theme.spacing(4),
   },
@@ -67,7 +66,7 @@ const NestedList = () => {
           Filtrar
         </ListSubheader>
       }
-      className={classes.root}
+      className={classes.root - 'gradient-bg'}
     >
       <ListItem button>
         <ListItemText primary="Categorias" />
@@ -111,40 +110,36 @@ export default class BuscarTiendas extends Component {
   }
 
   handleChange(event) {
-    console.log('HOLA');
     this.setState({ buscando: !this.state.buscando });
   }
 
   render() {
     return (
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className="gradient-bg">
         <Grid item xs={4}>
           <Button onClick={this.handleChangeBound}>Buscar</Button>
           <NestedList></NestedList>
-          
-          <Grid ontainer spacing={3}>
-          <Button 
-                    component={Link}  to="/singIn" 
-          color="primary">
-            Iniciar Sesión
-          </Button> <br/>
-          <Button 
-            component={Link}  to="/signupConsumidor"
-          color="primary">
-            Registrarse Consumidores
-          </Button><br/>
-          <Button 
-            component={Link}  to="/singUpComerciante"
-          color="primary">
-            Registrarse Comerciante
-          </Button>
 
+          <Grid ontainer spacing={3}>
+            <Button component={Link} to="/singIn" color="inherit">
+              Iniciar Sesión
+            </Button>
+            <br />
+            <Button component={Link} to="/signupConsumidor" color="inherit">
+              Registrarse Consumidores
+            </Button>
+            <br />
+            <Button component={Link} to="/singUpComerciante" color="inherit">
+              Registrarse Comerciante
+            </Button>
           </Grid>
         </Grid>
         <Grid item xs={8}>
           {!this.state.buscando ? (
             <div>
-              <div className="tittle" align="center" >QHATU</div>
+              <div className="tittle" align="center">
+                QHATU
+              </div>
               <div align="center" className="subtittle">
                 La cercania de tu comunidad
               </div>

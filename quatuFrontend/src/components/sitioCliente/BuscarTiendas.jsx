@@ -20,7 +20,7 @@ import { Box } from '@material-ui/core';
 
 const useStylesGrid = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    //    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
@@ -30,14 +30,10 @@ const useStylesGrid = makeStyles((theme) => ({
 }));
 
 const FullWidthGrid = (tiendas) => {
-  const classes = useStylesGrid();
-
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <ListaTiendas tiendas={tiendas}></ListaTiendas>
-      </Grid>
-    </div>
+    <Grid container spacing={3}>
+      <ListaTiendas tiendas={tiendas}></ListaTiendas>
+    </Grid>
   );
 };
 
@@ -129,10 +125,10 @@ export default class BuscarTiendas extends Component {
       })
       .catch((error) => console.log(error));
   };
-
   render() {
     return (
       <Grid
+        id = "nover"
         container
         style={{ height: '100%' }}
         spacing={3}
@@ -140,17 +136,30 @@ export default class BuscarTiendas extends Component {
       >
         <Grid
           container
-          id="qweqwe"
           item
-          xs={4}
+          xs={3}
           direction="column"
           justify="space-evenly"
           alignItems="center"
         >
-          <Grid item xs>
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
             <Button onClick={this.handleChangeBound}>Buscar</Button>
           </Grid>
-          <Grid item xs>
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
             {/*<NestedList></NestedList> */}
 
             <CardUsuario
@@ -161,7 +170,14 @@ export default class BuscarTiendas extends Component {
               }}
             />
           </Grid>
-          <Grid container item direction="column" alignItems="center" xs>
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
             <Button component={Link} to="/singIn" color="inherit">
               Iniciar Sesión
             </Button>
@@ -176,18 +192,27 @@ export default class BuscarTiendas extends Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid
+          container
+          item
+          direction="column"
+          alignItems="center"
+          justify="center"
+          xs={9}
+        >
           {!this.state.buscando ? (
-            <div>
-              <div className="tittle" align="center">
+            <Grid>
+              <Grid item className="tittle" align="center">
                 QHATU
-              </div>
-              <div className="subtittle" align="center">
+              </Grid>
+              <Grid item className="subtittle" align="center">
                 La cercania de tu comunidad
-              </div>
-            </div>
+              </Grid>
+            </Grid>
           ) : (
-            <FullWidthGrid tiendas={this.state.tiendas}></FullWidthGrid>
+            <Grid id="griBuscar" style={{ height: '100%' }} item container>
+              <ListaTiendas tiendas={this.state.tiendas}></ListaTiendas>
+            </Grid>
           )}
         </Grid>
       </Grid>

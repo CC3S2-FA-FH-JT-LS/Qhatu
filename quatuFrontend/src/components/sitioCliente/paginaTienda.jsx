@@ -46,6 +46,7 @@ export default function PaginaTienda(props) {
         valoracion: parseInt(laTienda.valoracion) , //estrellas
         nombre: miComerciante.nombreTienda,
         descripcion:laTienda.informacionPuesto,
+        contacto:laTienda.contacto,
         imagen:
         "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",
       }

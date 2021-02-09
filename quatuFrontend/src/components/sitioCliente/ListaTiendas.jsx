@@ -12,8 +12,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import DescriptionIcon from '@material-ui/icons/Description';
-import PaginaTienda from "./paginaTienda"
-import TiendaModels from "../DetalleTienda/modelData/tienda"
+import PaginaTienda from './paginaTienda';
+import FormControl from '@material-ui/core/FormControl';
+import TiendaModels from '../DetalleTienda/modelData/tienda';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Container from '@material-ui/core/Container';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = (theme) => ({
   root: {
@@ -26,6 +32,13 @@ const useStyles = (theme) => ({
   },
   tittle: {
     textAlign: 'center',
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
   },
   value: {},
   cardMedia: {
@@ -45,10 +58,10 @@ class ListaTiendas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valores: props.tiendas.tiendas,
+      valores: props.tiendas,
       inputValue: ' ',
       mostrarDetalles: true,
-      tiendaId: ''
+      tiendaId: '',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -77,86 +90,81 @@ class ListaTiendas extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        {
-          (this.state.mostrarDetalles)?
-          (
-            <div>
-              <form onSubmit={this.handleSubmit}>
-                <div>
-                  <Typography
-                    className={classes.tittle}
-                    id="valoracionLabel"
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                  >
-                    Tiendas
-                  </Typography>
-                </div>
-      
-                <div className={classes.busqueda}>
-                  <TextField
-                    name="busqueda"
-                    label="Nombre"
-                    rows="1"
-                    onInput={this.handleInputChange}
-                    variant="outlined"
+      <Container id="cont1" style={{ heigth: '100%' }}>
+        {this.state.mostrarDetalles ? (
+          <Grid
+            container
+            id="gri1"
+            direction="column"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item container direction="row" id="gri2" item>
+              <FormControl
+                fullWidth
+                style={{ margin: '20px' }}
+                onSubmit={this.handleSubmit}
+              >
+                <Typography
+                  className={classes.tittle}
+                  id="valoracionLabel"
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                >
+                  Tiendas
+                </Typography>
+                <TextField
+                  name="busqueda"
+                  label="Nombre"
+                  rows="1"
+                  onInput={this.handleInputChange}
+                  variant="outlined"
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid id="gri3" item container>  
+            <GridList cellHeight={180} className={classes.gridList}>
+              {this.filtro().map((value,index) => (
+                <GridListTile key={index}>
+                  <img src={value.imagen}/>
+                  <GridListTileBar
+                    title={value.nombre}
+//                    subtitle={<span>by: {tile.author}</span>}
+                    actionIcon={
+                      <IconButton
+                        aria-label={`info about ${value.nombre}`}
+                        className={classes.icon}
+                        onClick={() => {
+                          this.setState({
+                            tiendaId: value.tiendaId,
+                          });
+                          console.log(
+                            'DSADSADADASDASDADSDSASADS',
+                            value.tiendaId
+                          );
+                          this.setState({
+                            mostrarDetalles: !this.state.mostrarDetalles,
+                          });
+                          console.log(this.state.mostrarDetalles);
+                        }}
+                      >
+                        <InfoIcon />
+                      </IconButton >
+                    }
                   />
-                </div>
-      
-                <div>
-                  
-                  <Grid container spacing={3}>
-                    {this.filtro().map((value) => (
-                      <Grid item key={value.id} xs={12} sm={6}>
-                        <Card className={classes.value.id} id={`cardOf${value.id}`}>
-                          <CardMedia
-                            className={classes.cardMedia}
-                            image={value.imagen}
-                            title={value.nombre}
-                          />
-                          <CardContent className={classes.cardContent}>
-                            <Typography gutterBottom variant="h5" component="h2">
-                              {value.nombre}
-                            </Typography>
-                            <Typography>
-                              Creado el: {value.fCreacion.dia}/{value.fCreacion.mes}/
-                              {value.fCreacion.año}
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <IconButton
-                              className={classes.cardButton}
-                              aria-label="like"
-                              onClick={() => {
-                                this.setState({
-                                  tiendaId: value.tiendaId
-                                })
-                                console.log('DSADSADADASDASDADSDSASADS',value.tiendaId);
-                                this.setState({ mostrarDetalles: !this.state.mostrarDetalles });
-                                console.log(this.state.mostrarDetalles);
-                              }}
-                            >
-                              <DescriptionIcon /> Ver detalles
-                            </IconButton>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </div>
-              </form>
-            </div>
-          )
-          :
-          (
-            <div>
-              <PaginaTienda tiendaId={this.state.tiendaId}/>
-            </div>
-          )
-        }
-      </div>
+                </GridListTile>
+              ))}
+            </GridList>
+            </Grid>
+          </Grid>
+        ) : (
+          <div>
+            <PaginaTienda tiendaId={this.state.tiendaId} />
+          </div>
+        )}
+      </Container>
     );
   }
 }

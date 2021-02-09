@@ -15,6 +15,8 @@ import ListaTiendas from './ListaTiendas';
 import { Link } from 'react-router-dom';
 import '../../commons/commons.css';
 import axios from 'axios';
+import CardUsuario from './CardUsuario';
+import { Box } from '@material-ui/core';
 
 const useStylesGrid = makeStyles((theme) => ({
   root: {
@@ -33,7 +35,7 @@ const FullWidthGrid = (tiendas) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <ListaTiendas tiendas = {tiendas}></ListaTiendas>
+        <ListaTiendas tiendas={tiendas}></ListaTiendas>
       </Grid>
     </div>
   );
@@ -106,7 +108,7 @@ export default class BuscarTiendas extends Component {
 
     this.state = {
       buscando: false,
-      tiendas: []
+      tiendas: [],
     };
 
     this.handleChangeBound = (event) => this.handleChange(event);
@@ -117,23 +119,49 @@ export default class BuscarTiendas extends Component {
   }
 
   componentDidMount = () => {
-    axios.get("/api/get-comerciantes").then(res => {
-      this.setState({
-        tiendas: res.data.message
-      });
-      console.log(this.state.tiendas);
-    })
-    .catch(error => console.log(error));
+    axios
+      .get('/api/get-comerciantes')
+      .then((res) => {
+        this.setState({
+          tiendas: res.data.message,
+        });
+        console.log(this.state.tiendas);
+      })
+      .catch((error) => console.log(error));
   };
 
   render() {
     return (
-      <Grid container spacing={3} className="gradient-bg">
-        <Grid item xs={4}>
-          <Button onClick={this.handleChangeBound}>Buscar</Button>
-          <NestedList></NestedList>
+      <Grid
+        container
+        style={{ height: '100%' }}
+        spacing={3}
+        className="gradient-bg"
+      >
+        <Grid
+          container
+          id="qweqwe"
+          item
+          xs={4}
+          direction="column"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          <Grid item xs>
+            <Button onClick={this.handleChangeBound}>Buscar</Button>
+          </Grid>
+          <Grid item xs>
+            {/*<NestedList></NestedList> */}
 
-          <Grid ontainer spacing={3}>
+            <CardUsuario
+              contenido={{
+                imagen:
+                  'https://i.ebayimg.com/images/g/daYAAOSwt05ZrHcv/s-l300.jpg',
+                usuario: 'Pepe Navarrro',
+              }}
+            />
+          </Grid>
+          <Grid container item direction="column" alignItems="center" xs>
             <Button component={Link} to="/singIn" color="inherit">
               Iniciar Sesión
             </Button>
@@ -147,18 +175,19 @@ export default class BuscarTiendas extends Component {
             </Button>
           </Grid>
         </Grid>
+
         <Grid item xs={8}>
           {!this.state.buscando ? (
             <div>
               <div className="tittle" align="center">
                 QHATU
               </div>
-              <div align="center" className="subtittle">
+              <div className="subtittle" align="center">
                 La cercania de tu comunidad
               </div>
             </div>
           ) : (
-            <FullWidthGrid tiendas = {this.state.tiendas}></FullWidthGrid>
+            <FullWidthGrid tiendas={this.state.tiendas}></FullWidthGrid>
           )}
         </Grid>
       </Grid>

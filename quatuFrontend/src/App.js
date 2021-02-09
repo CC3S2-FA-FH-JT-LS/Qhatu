@@ -13,8 +13,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 export default function App() {
   return (
-    <Container maxWidth="lg" >
-      <Box my={4}>
+    
+    <Container style={{height:"100%"}}   maxWidth="lg" >
         <Router>
           <Switch>
             <Route path="/comerciantes">
@@ -40,7 +40,6 @@ export default function App() {
             </Route>
           </Switch>
         </Router>
-      </Box>
     </Container>
   );
 }

@@ -26,17 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PaginaComerciante() {
   const [tiendaObtenida, setTiendaObtenida] = React.useState({valoracion:1});
-  const [comentariosObtenidos, setComentariosObtenidos] = React.useState([
-    {
-      id: 0,
-      valoracion: 5, //estrellas
-      fechaPublicacion:"10/12/20",
-      contenido:
-        "Integer suscipit libero cursus ante porta, in porta diam aliquam In vel.",
-      usuario:"Camila Perez",
-        imagen: "https://picsum.photos/seed/picsum/100",
-    },]
-    );
+  const [comentariosObtenidos, setComentariosObtenidos] = React.useState([]);
 
   useEffect(() => {
     
@@ -49,27 +39,16 @@ export default function PaginaComerciante() {
       }
       }
     ).then((res)=>{
-      //console.log("obtenido: ");
-      //console.log(res);
       let laTienda = res.data.response
       let miComerciante = laTienda.comercianteId
-      //console.log( "La tieenda \n", laTienda);
-      //console.log( "El comercianteeee \n", miComerciante);
-      //console.log( "Mi id de tienda  \n", laTienda._id);
-      //console.log( "Mi valoracion de tienda  \n", laTienda.valoracion);
-      //console.log( "Mi descripcion de tienda  \n", laTienda.informacionPuesto);
-      //console.log( "Mi nombre de tienda  \n", miComerciante.nombreTienda);
       let miTienda = {
         id: laTienda._id,
         valoracion: parseInt(laTienda.valoracion) , //estrellas
         nombre: miComerciante.nombreTienda,
         descripcion:laTienda.informacionPuesto,
         imagen:
-        "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",
-      }
+        "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",}
       
-      //console.log( "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-      //console.log(miTienda);
       setTiendaObtenida(miTienda);
     })
 
@@ -120,7 +99,7 @@ export default function PaginaComerciante() {
             <EditarCuenta />
           </Route>
           <Route path="/comerciantes/eproducto">
-            <div>Editar Prodcuto</div>
+            <div>Editar Producto</div>
             <FormularioEditarProducto />
           </Route>
           <Route path={["/comerciantes/dashboard", "/comerciantes/"]}>

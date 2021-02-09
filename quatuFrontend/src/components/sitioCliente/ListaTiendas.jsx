@@ -34,8 +34,8 @@ const useStyles = (theme) => ({
     textAlign: 'center',
   },
   gridList: {
-    width: 500,
-    height: 450,
+    width: "100%",
+    height: "800px",
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -124,39 +124,39 @@ class ListaTiendas extends React.Component {
               </FormControl>
             </Grid>
 
-            <Grid id="gri3" item container>  
-            <GridList cellHeight={180} className={classes.gridList}>
-              {this.filtro().map((value,index) => (
-                <GridListTile key={index}>
-                  <img src={value.imagen}/>
-                  <GridListTileBar
-                    title={value.nombre}
-//                    subtitle={<span>by: {tile.author}</span>}
-                    actionIcon={
-                      <IconButton
-                        aria-label={`info about ${value.nombre}`}
-                        className={classes.icon}
-                        onClick={() => {
-                          this.setState({
-                            tiendaId: value.tiendaId,
-                          });
-                          console.log(
-                            'DSADSADADASDASDADSDSASADS',
-                            value.tiendaId
-                          );
-                          this.setState({
-                            mostrarDetalles: !this.state.mostrarDetalles,
-                          });
-                          console.log(this.state.mostrarDetalles);
-                        }}
-                      >
-                        <InfoIcon />
-                      </IconButton >
-                    }
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
+            <Grid id="gri3" item container fullHeight >
+              <GridList cellHeight={'300'} className={classes.gridList}>
+                {this.filtro().map((value, index) => (
+                  <GridListTile key={index}>
+                    <img src={value.imagen} />
+                    <GridListTileBar
+                      title={value.nombre}
+                      //                    subtitle={<span>by: {tile.author}</span>}
+                      actionIcon={
+                        <IconButton
+                          aria-label={`info about ${value.nombre}`}
+                          className={classes.icon}
+                          onClick={() => {
+                            this.setState({
+                              tiendaId: value.tiendaId,
+                            });
+                            console.log(
+                              'DSADSADADASDASDADSDSASADS',
+                              value.tiendaId
+                            );
+                            this.setState({
+                              mostrarDetalles: !this.state.mostrarDetalles,
+                            });
+                            console.log(this.state.mostrarDetalles);
+                          }}
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </GridListTile>
+                ))}
+              </GridList>
             </Grid>
           </Grid>
         ) : (

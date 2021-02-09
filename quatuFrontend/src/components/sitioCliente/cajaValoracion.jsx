@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import 'fontsource-roboto';
 import "./cajaValoracion.css";
-
+import axios from "axios";
 
 class CajaValoracion extends React.Component {
   constructor(props) {
@@ -15,6 +15,8 @@ class CajaValoracion extends React.Component {
     this.state = {
       valoracion: 0,
       comentario: " ",
+      consumidorId:"601c0b6920877433ece8c15b",
+      tiendaId:"600046678f25c125841686ad"
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,6 +37,17 @@ class CajaValoracion extends React.Component {
   }
 
   handleSubmit(event) {
+    const comentario={
+      "tiendaId":this.state.tiendaId,
+      "consumidorId":this.state.consumidorId,
+      "valoracion":this.state.valoracion,
+      "texto":this.state.comentario,
+    }
+    axios.post(`/api/dejar-comentario`,comentario)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+    });
     alert("Datos: " + JSON.stringify(this.state));
     event.preventDefault();
   }

@@ -97,7 +97,7 @@ export default function SignIn() {
         axios.get(baseURL,
           {params:{
             nombreUsuario:User.nombreUsuario,
-            password:User.contraseña}
+            contraseña:User.contraseña}
           })
           .then(res => {
             if(res.data.ok === false){

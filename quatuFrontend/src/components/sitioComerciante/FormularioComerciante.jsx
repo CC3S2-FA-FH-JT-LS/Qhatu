@@ -21,7 +21,6 @@ import { DropzoneArea } from "material-ui-dropzone";
 import "../../App.css";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import { useState, useEffect } from 'react';
 
 function Copyright() {
   return (
@@ -80,61 +79,9 @@ export default function FormularioComerciante(props) {
   };
   var comerciante = props.comerciante;
   const [checked, setChecked] = React.useState(false);
-  const [newUser, setUser] = React.useState(props.comerciante);
-  const [usuarioComerciante, setComerciante] = useState({
-    nombre: "",
-    nombreUsuario: "",
-    contacto: "",
-    numeroPuesto: "",
-    nombreTienda: "",
-    informacionPuesto: "",
-    categoria: "",
-    imagen: ""
-  });
-
-  useEffect(() => {
-    console.log("Hola -------")
-    let tienda_id = localStorage.getItem('myStore');
-    let role = localStorage.getItem('myRole');
-    if(true){
-      console.log("consulta sobre "+tienda_id);
-      axios.get("/api/mostrar-detalles-tienda",
-      {params:{
-      tiendaId : "600046678f25c125841686ad",
-      }
-      }
-      ).then((res)=>{
-        //console.log("obtenido: ");
-        console.log("Datos enviados desde back");
-        console.log(res.data)
-        let datosTienda = res.data.response
-        let comerciante = datosTienda.comercianteId
-        
-        //console.log( "El comercianteeee \n", miComerciante);
-        data = {
-          nombre: comerciante.nombre,
-          nombreUsuario: comerciante.nombreUsuario,
-          contacto: comerciante.contacto,
-          numeroPuesto: datosTienda.numeroPuesto,
-          nombreTienda: comerciante.nombreTienda,
-          informacionPuesto: datosTienda.informacionPuesto,
-          categoria: datosTienda.categoria,
-          imagen: datosTienda.imagen,
-        };
-        console.log( "La tieenda \n", data);
-        /*console.log(data)
-        console.log(usuarioComerciante)*/
-        //usuarioComerciante = data;
-        setComerciante(data);
-        console.log("Usuario luego de set \n",usuarioComerciante);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
-    }
-    }, [])
-
-
+  const [newUser, setUser] = React.useState(comerciante);
+  console.log("Nuevo usuario")
+  console.log(newUser);
   const handleChange = (event) => {
     var name = event.target.name;
     var userdata={

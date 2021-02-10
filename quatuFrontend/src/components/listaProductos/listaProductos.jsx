@@ -56,7 +56,7 @@ class ListaProductos extends React.Component {
       inputValue: " ",
       showBool: false,
       vistaCliente: (props.vistaCosumidor),
-      comercianteBool: true,
+      comercianteBool: props.comercianteBool,
       tiendaId: props.tiendaId,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -190,7 +190,7 @@ class ListaProductos extends React.Component {
                                     }}>
                                     <DeleteIcon />
                                 </IconButton >}
-                                <IconButton 
+                                {this.state.comercianteBool &&<IconButton 
                                 size="small" 
                                 className={classes.cardButtonEdit} aria-label="like" 
                                 onClick={() => {
@@ -198,7 +198,7 @@ class ListaProductos extends React.Component {
                                     component={Link}  to="/comerciantes/eproducto"   
                                     >
                                     <EditIcon />
-                                </IconButton>
+                                </IconButton>}
                             </CardActions>
                         </Card>
                     </Grid>

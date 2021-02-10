@@ -29,7 +29,8 @@ export default function PaginaTienda(props) {
         </Grid>
 
         <Grid id="griT2" item xs={7}>
-          <ListaProductos 
+          <ListaProductos
+            comercianteBool={false} 
             tiendaId={props.tiendaId}
           />
         </Grid>

@@ -34,6 +34,7 @@ export default function PaginaComerciante() {
           <Route path="/comerciantes/productos">
             <ListaProductos
               tiendaId={"600046678f25c125841686ad"}
+              comercianteBool={true}
             />
           </Route>
           <Route path="/comerciantes/editar">

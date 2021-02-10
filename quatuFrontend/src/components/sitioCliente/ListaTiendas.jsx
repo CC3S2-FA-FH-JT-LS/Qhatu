@@ -122,7 +122,7 @@ class ListaTiendas extends React.Component {
                             </Typography>
                             <Typography>
                               Creado el: {value.fCreacion.dia}/{value.fCreacion.mes}/
-                              {value.fCreacion.año}
+                              {value.fCreacion.anio}
                             </Typography>
                           </CardContent>
                           <CardActions>
@@ -133,7 +133,6 @@ class ListaTiendas extends React.Component {
                                 this.setState({
                                   tiendaId: value.tiendaId
                                 })
-                                console.log('DSADSADADASDASDADSDSASADS',value.tiendaId);
                                 this.setState({ mostrarDetalles: !this.state.mostrarDetalles });
                                 console.log(this.state.mostrarDetalles);
                               }}

@@ -81,6 +81,7 @@ class ListaTiendas extends React.Component {
         this.state.valores[i].nombreTienda
           .toLowerCase()
           .includes(this.state.inputValue.toLowerCase())
+          || this.state.inputValue.toLowerCase()==" "
       )
       listItems.push(this.state.valores[i])
     }

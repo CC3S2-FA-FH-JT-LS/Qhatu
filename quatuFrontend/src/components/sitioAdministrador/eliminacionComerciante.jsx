@@ -69,7 +69,7 @@ class EliminacionComerciante extends React.Component {
         console.log(res);
         console.log(res.data);
     })*/
-    const comercio={
+    /*const comercio={
       "contacto" : "12345678",
       "contraseña" : "contrasena",
       "nombre" : "Leonardo S.",
@@ -82,7 +82,7 @@ class EliminacionComerciante extends React.Component {
     };
     axios.post(`/api/registrar-comerciante`,comercio)
       .then(res => {
-    });
+    });*/
   };
   handleInputChange(event) {
     this.setState({

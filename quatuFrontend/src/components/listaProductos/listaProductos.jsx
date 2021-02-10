@@ -57,7 +57,7 @@ class ListaProductos extends React.Component {
       showBool: false,
       vistaCliente: (props.vistaCosumidor),
       comercianteBool: true,
-      tiendaId: "600046678f25c125841686ad",
+      tiendaId: props.tiendaId,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.toggleChecked = this.toggleChecked.bind(this);
@@ -80,13 +80,13 @@ class ListaProductos extends React.Component {
     var actualCheck= this.state.showBool;
     for (let i = 0; i < this.state.valores.length; i++) {
         if(!actualCheck){
-            if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
+            if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())|| this.state.inputValue.toLowerCase()==" "){
                 listItems[j] = this.state.valores[i];
                 j++;
             }
         }
         else{
-            if(!this.state.valores[i].disponible && this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
+            if(this.state.valores[i].estado=="no disponible" && this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
                 listItems[j] = this.state.valores[i];
                 j++;
             }

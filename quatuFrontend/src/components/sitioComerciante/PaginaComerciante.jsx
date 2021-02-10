@@ -32,7 +32,9 @@ export default function PaginaComerciante() {
       <Router>
         <Switch>
           <Route path="/comerciantes/productos">
-            <ListaProductos />
+            <ListaProductos
+              tiendaId={"600046678f25c125841686ad"}
+            />
           </Route>
           <Route path="/comerciantes/editar">
             <EditarCuenta />

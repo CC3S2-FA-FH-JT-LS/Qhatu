@@ -121,7 +121,6 @@ export default class BuscarTiendas extends Component {
         this.setState({
           tiendas: res.data.message,
         });
-        console.log(this.state.tiendas);
       })
       .catch((error) => console.log(error));
   };

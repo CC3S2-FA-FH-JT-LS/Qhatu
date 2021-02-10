@@ -2,26 +2,24 @@
 
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
+const jwt = require('../services/jwt');
+const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
-  console.log("You make a get request")
+  console.log('You make a get request');
   const params = req.query;
-  console.log(params)
   const nombreUsuario = params.nombreUsuario;
-  const contraseña = params.password;
+  const contraseña = params.contraseña;
   let isConsumidor = true;
   let isComerciante = true;
-  console.log(contraseña);
 
   try {
     const comerciante = await Comerciante.findOne({ nombreUsuario }).exec();
     const consumidor = await Consumidor.findOne({ nombreUsuario }).exec();
 
     if (!comerciante) {
-      console.log('false 1');
       isComerciante = false;
     } else if (!consumidor) {
-      console.log('false 2');
       isConsumidor = false;
     } else {
       return res.status(404).json({
@@ -31,25 +29,37 @@ exports.login = async (req, res) => {
     }
 
     if (isComerciante) {
-      if (comerciante.contraseña === contraseña) {
+      if (bcrypt.compareSync(contraseña, comerciante.contraseña)) {
         return res.status(200).json({
           ok: true,
           rol: 'comerciante',
-          response: comerciante,
+          comerciante,
+          token: jwt.createTokenComerciante(comerciante),
+        });
+      } else {
+        return res.status(200).json({
+          ok: false,
+          message: 'Contraseña incorrecta',
         });
       }
     }
 
     if (isConsumidor) {
-      if (consumidor.contraseña === contraseña) {
+      if (bcrypt.compareSync(contraseña, consumidor.contraseña)) {
         return res.status(200).json({
           ok: true,
           rol: 'consumidor',
-          response: consumidor,
+          consumidor,
+          token: jwt.createTokenConsumidor(consumidor),
+        });
+      } else {
+        return res.status(200).json({
+          ok: false,
+          message: 'Contraseña incorrecta',
         });
       }
     }
-  } catch (error) {
+  } catch (exception) {
     return res.status(500).json({
       ok: false,
       message: `${exception}`,

@@ -142,7 +142,7 @@ export default function PanelDetallesTienda(props) {
       </CardContent>
 
       <CardActions disableSpacing>
-        <Button
+        {props.consumidorId!=null &&<Button
           variant="contained"
           className={classes.btn}
           onClick={() => {
@@ -151,8 +151,8 @@ export default function PanelDetallesTienda(props) {
           color="primary"
         >
           Contacto
-        </Button>
-        <Button
+        </Button>}
+        {props.consumidorId!=null && <Button
           variant="contained"
           onClick={() => {
             setComentar(!comentar);
@@ -160,9 +160,12 @@ export default function PanelDetallesTienda(props) {
           color="secondary"
         >
           Comentario
-        </Button>
+        </Button>}
         <Modal isOpen={comentar}>
-          <CajaValoracion />
+          <CajaValoracion 
+            tiendaId={props.tiendaId}
+            consumidorId={props.consumidorId}
+          />
           <Button
             variant="contained"
             onClick={() => {

@@ -13,11 +13,10 @@ class CajaValoracion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      propa: props,
       valoracion: 0,
       comentario: " ",
-      consumidorId:"601c0b6920877433ece8c15b",
-      tiendaId:"600046678f25c125841686ad"
+      consumidorId: props.consumidorId,
+      tiendaId: props.tiendaId,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);

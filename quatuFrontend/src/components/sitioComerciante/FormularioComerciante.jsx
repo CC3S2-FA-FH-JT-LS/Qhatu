@@ -79,9 +79,13 @@ export default function FormularioComerciante(props) {
   };
   var comerciante = props.comerciante;
   const [checked, setChecked] = React.useState(false);
+<<<<<<< HEAD
   const [newUser, setUser] = React.useState(comerciante);
   console.log("Nuevo usuario")
   console.log(newUser);
+=======
+  const [newUser, setUser] = React.useState(props.comerciante);
+>>>>>>> adb3d0e2991c2e7598b355cc369fe56af5709eb6
   const handleChange = (event) => {
     var name = event.target.name;
     var userdata={
@@ -175,6 +179,14 @@ export default function FormularioComerciante(props) {
       return "Registrarse";
     }
   };
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); 
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+  }
   return (
     <Container component="main" maxWidth="xs" className={`${classes.container} text-color`}>
       <CssBaseline />
@@ -322,6 +334,16 @@ export default function FormularioComerciante(props) {
               <DropzoneArea
                 acceptedFiles={["image/*"]}
                 dropzoneText={"Arrastre la foto de su tienda"}
+                onDrop={e => {
+                  var promesa;
+                  var base64;
+                  e.forEach(item =>
+                    promesa=getBase64(item)
+                  );
+                  promesa.then(function(result) {
+                    newUser.imagen=result;  
+                  });
+                }}
               />
             </Grid>
             <Grid item xs={12}>

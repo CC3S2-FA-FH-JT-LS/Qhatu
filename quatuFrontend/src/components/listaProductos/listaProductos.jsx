@@ -56,14 +56,13 @@ class ListaProductos extends React.Component {
       inputValue: " ",
       showBool: false,
       vistaCliente: (props.vistaCosumidor),
-      comercianteBool: true,
-      tiendaId: "600046678f25c125841686ad",
+      comercianteBool: props.comercianteBool,
+      tiendaId: props.tiendaId,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.toggleChecked = this.toggleChecked.bind(this);
   }
   toggleChecked(event) {
-    console.log("Hola como estas", event.target.checked);
     this.setState({
       [event.target.name]: event.target.checked,
       showBool: event.target.checked,
@@ -81,13 +80,13 @@ class ListaProductos extends React.Component {
     var actualCheck= this.state.showBool;
     for (let i = 0; i < this.state.valores.length; i++) {
         if(!actualCheck){
-            if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
+            if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())|| this.state.inputValue.toLowerCase()==" "){
                 listItems[j] = this.state.valores[i];
                 j++;
             }
         }
         else{
-            if(!this.state.valores[i].disponible && this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
+            if(this.state.valores[i].estado=="no disponible" && this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
                 listItems[j] = this.state.valores[i];
                 j++;
             }
@@ -125,8 +124,6 @@ class ListaProductos extends React.Component {
     }
     axios.delete("/api/delete-producto",{data: dataProducto})
     .then(res => {
-      console.log(res);
-      console.log(res.data);
     })
     .catch(error => console.log(error));
   }
@@ -193,16 +190,15 @@ class ListaProductos extends React.Component {
                                     }}>
                                     <DeleteIcon />
                                 </IconButton >}
-                                <IconButton 
+                                {this.state.comercianteBool &&<IconButton 
                                 size="small" 
                                 className={classes.cardButtonEdit} aria-label="like" 
                                 onClick={() => {
-                                         console.log(this.state.valores.indexOf(value));
                                     }}
                                     component={Link}  to="/comerciantes/eproducto"   
                                     >
                                     <EditIcon />
-                                </IconButton>
+                                </IconButton>}
                             </CardActions>
                         </Card>
                     </Grid>

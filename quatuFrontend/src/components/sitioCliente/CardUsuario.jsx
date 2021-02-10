@@ -11,33 +11,23 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 345,
     },
     comment: {
+      width:"100%",
+      maxHeight: 80,
       marginBottom: "10px",
    },
     media: {
       height: 0,
       paddingTop: "56.25%", // 16:9
     },
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: "rotate(180deg)",
-    },
   }));
   
 
-export default function Comentario(props) {
+export default function CardUsuario(props) {
     const contenido = props.contenido;
     return (
-      <Grid>
-        <Card className={useStyles().comment}>
+        <Card fullWidth className={useStyles().comment}>
           <CardHeader
             avatar={
               <Avatar
@@ -47,16 +37,8 @@ export default function Comentario(props) {
               ></Avatar>
             }
             title={contenido.usuario}
-            //subheader={contenido.fechaPublicacion}
           />
-          <CardContent>
-            <Rating name="read-only" value={contenido.valoracion} readOnly />
-            <Typography variant="body2" color="textSecondary" component="p">
-              {contenido.contenido}
-            </Typography>
-          </CardContent>
         </Card>
-      </Grid>
     );
   }
   

@@ -3,7 +3,7 @@ import FormularioComerciante from "../sitioComerciante/FormularioComerciante";
 import "../../App.css";
 export default function SignUpComerciante() {
   return (
-    <div className="gradient-bg">
+    <div >
       <FormularioComerciante componentTitle="Registro Comerciante"></FormularioComerciante>
     </div>
   );

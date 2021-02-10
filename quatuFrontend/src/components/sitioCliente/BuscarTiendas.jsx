@@ -15,10 +15,12 @@ import ListaTiendas from './ListaTiendas';
 import { Link } from 'react-router-dom';
 import '../../commons/commons.css';
 import axios from 'axios';
+import CardUsuario from './CardUsuario';
+import { Box } from '@material-ui/core';
 
 const useStylesGrid = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    //    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
@@ -28,14 +30,10 @@ const useStylesGrid = makeStyles((theme) => ({
 }));
 
 const FullWidthGrid = (tiendas) => {
-  const classes = useStylesGrid();
-
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <ListaTiendas tiendas = {tiendas}></ListaTiendas>
-      </Grid>
-    </div>
+    <Grid container spacing={3}>
+      <ListaTiendas tiendas={tiendas}></ListaTiendas>
+    </Grid>
   );
 };
 
@@ -68,7 +66,7 @@ const NestedList = () => {
           Filtrar
         </ListSubheader>
       }
-      className={classes.root - 'gradient-bg'}
+      className={classes.root}
     >
       <ListItem button>
         <ListItemText primary="Categorias" />
@@ -106,7 +104,7 @@ export default class BuscarTiendas extends Component {
 
     this.state = {
       buscando: false,
-      tiendas: []
+      tiendas: [],
     };
 
     this.handleChangeBound = (event) => this.handleChange(event);
@@ -117,48 +115,104 @@ export default class BuscarTiendas extends Component {
   }
 
   componentDidMount = () => {
-    axios.get("/api/get-comerciantes").then(res => {
-      this.setState({
-        tiendas: res.data.message
-      });
-      console.log(this.state.tiendas);
-    })
-    .catch(error => console.log(error));
+    axios
+      .get('/api/get-comerciantes')
+      .then((res) => {
+        this.setState({
+          tiendas: res.data.message,
+        });
+      })
+      .catch((error) => console.log(error));
   };
-
   render() {
     return (
-      <Grid container spacing={3} className="gradient-bg">
-        <Grid item xs={4}>
-          <Button onClick={this.handleChangeBound}>Buscar</Button>
-          <NestedList></NestedList>
+      <Grid
+        id = "nover"
+        container
+        style={{ height: '100%' }}
+        spacing={3}
+        //className="gradient-bg"
+      >
+        <Grid
+          container
+          item
+          xs={3}
+          direction="column"
+          justify="space-evenly"
+          alignItems="center"
+          style={{maxHeight:"1000px"}}
+        >
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
+            <Button fullWidth onClick={this.handleChangeBound}>Buscar</Button>
+          </Grid>
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
+            {/*<NestedList></NestedList> */}
 
-          <Grid ontainer spacing={3}>
-            <Button component={Link} to="/singIn" color="inherit">
+            <CardUsuario
+              contenido={{
+                imagen:
+                  'https://i.ebayimg.com/images/g/daYAAOSwt05ZrHcv/s-l300.jpg',
+                usuario: 'Pepe Navarrro',
+              }}
+            />
+          </Grid>
+          <Grid
+            container
+            item
+            direction="column"
+            alignItems="center"
+            justify="center"
+            xs
+          >
+            <Button fullWidth component={Link} to="/singIn" color="inherit">
               Iniciar Sesión
             </Button>
             <br />
-            <Button component={Link} to="/signupConsumidor" color="inherit">
-              Registrarse Consumidores
+            <Button fullWidth component={Link} to="/signupConsumidor" color="inherit">
+              Registrarse <br/> Consumidores
             </Button>
             <br />
-            <Button component={Link} to="/singUpComerciante" color="inherit">
-              Registrarse Comerciante
+            <Button fullWidth component={Link} to="/singUpComerciante" color="inherit">
+              Registrarse <br/> Comerciante
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+
+        <Grid
+          container
+          item
+          direction="column"
+          alignItems="center"
+          justify="center"
+          xs={9}
+        >
           {!this.state.buscando ? (
-            <div>
-              <div className="tittle" align="center">
+            <Grid>
+              <Grid item className="tittle" align="center">
                 QHATU
-              </div>
-              <div align="center" className="subtittle">
+              </Grid>
+              <Grid item className="subtittle" align="center">
                 La cercania de tu comunidad
-              </div>
-            </div>
+              </Grid>
+            </Grid>
           ) : (
-            <FullWidthGrid tiendas = {this.state.tiendas}></FullWidthGrid>
+            <Grid id="griBuscar" style={{ height: '100%' }} item container>
+              <ListaTiendas tiendas={this.state.tiendas}></ListaTiendas>
+            </Grid>
           )}
         </Grid>
       </Grid>

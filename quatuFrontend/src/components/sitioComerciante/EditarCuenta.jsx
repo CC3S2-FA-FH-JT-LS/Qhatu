@@ -21,8 +21,12 @@ class Test extends React.Component {
     };
     this.handleMount = this.handleMount.bind(this);
   }
+<<<<<<< HEAD
   handleMount(data){
     console.log(data)
+=======
+  handleMount(event,data){
+>>>>>>> adb3d0e2991c2e7598b355cc369fe56af5709eb6
     this.setState({User:data});
     console.log("-------");
     console.log(this.state.User);
@@ -32,7 +36,6 @@ class Test extends React.Component {
     let tienda_id = localStorage.getItem('myStore');
     let role = localStorage.getItem('myRole');
     if(role === "comerciante"){
-      console.log("consulta sobre "+tienda_id);
       axios.get("/api/mostrar-detalles-tienda",
       {params:{
       tiendaId : "600046678f25c125841686ad",
@@ -69,7 +72,6 @@ class Test extends React.Component {
         this.handleMount(data);
         //this.setState({User:data});
         //this.render();
-        console.log(this.state.User);
       })
       .catch(error => {
         console.error('There was an error!', error);

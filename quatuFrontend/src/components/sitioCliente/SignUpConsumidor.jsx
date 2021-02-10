@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import { DropzoneArea } from "material-ui-dropzone";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import "../../App.css";
 
 function Copyright() {
   return (
@@ -30,11 +31,15 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  container:{
+    padding:"20"
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -122,7 +127,8 @@ export default function SignUpConsumidor() {
     });
   }
   return (
-    <Container component="main" maxWidth="xs">
+    <div className={`gradient-bg `} >
+      <Container component="main" maxWidth="xs" className={`${classes.container}`}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -227,10 +233,12 @@ export default function SignUpConsumidor() {
             </Grid>
           </Grid>
         </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+    
   );
 }

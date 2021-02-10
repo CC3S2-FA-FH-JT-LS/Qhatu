@@ -63,6 +63,8 @@ class ListaTiendas extends React.Component {
       mostrarDetalles: true,
       tiendaId: '',
     };
+    console.log("////////////Objetos tienda/////////////////");
+    console.log(this.state.valores);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
   handleInputChange(event) {
@@ -74,16 +76,13 @@ class ListaTiendas extends React.Component {
 
   filtro() {
     const listItems = [];
-    var j = 0;
     for (let i = 0; i < this.state.valores.length; i++) {
       if (
         this.state.valores[i].nombre
           .toLowerCase()
           .includes(this.state.inputValue.toLowerCase())
-      ) {
-        listItems[j] = this.state.valores[i];
-        j++;
-      }
+      )
+      listItems.push(this.state.valores[i])
     }
     return listItems;
   }
@@ -160,9 +159,11 @@ class ListaTiendas extends React.Component {
             </Grid>
           </Grid>
         ) : (
-          <div>
-            <PaginaTienda tiendaId={this.state.tiendaId} />
-          </div>
+          <Grid container alignItems="Center">
+            <Grid item>
+              <PaginaTienda tiendaId={this.state.tiendaId} />
+            </Grid>
+          </Grid>
         )}
       </Container>
     );

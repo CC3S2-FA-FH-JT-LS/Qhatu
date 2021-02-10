@@ -1,6 +1,7 @@
 'use strict';
 
 const Tienda = require('../models/tienda');
+const Producto = require('../models/producto');
 
 exports.mostrarDetallesTienda = async (req, res) => {
   const tiendaId = req.query.tiendaId;
@@ -108,4 +109,23 @@ exports.contadorContacto = async (req, res) => {
       message: `${exception}`,
     });
   }
+};
+
+exports.getOneProductoById = async (req, res) => {
+  const productoId = req.params.productoId;
+
+  try {
+    const producto = await Producto.findById(productoId).exec();
+    if (!producto) {
+      return res.status(500).json({
+        ok: false,
+        response: 'Ocurrio un error al buscar el producto',
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      response: producto,
+    });
+  } catch (exception) {}
 };

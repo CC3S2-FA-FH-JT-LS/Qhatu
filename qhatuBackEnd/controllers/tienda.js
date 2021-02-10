@@ -65,7 +65,7 @@ exports.obtenerComentarios = async (req, res) => {
 
   try {
     const tienda = await Tienda.findById(tiendaId, { comentarios: 1 })
-      .populate('comentarios')
+      .populate({ path: 'comentarios', populate: [{ path: 'consumidorId' }] })
       .exec();
     if (!tienda) {
       return res.status(500).json({

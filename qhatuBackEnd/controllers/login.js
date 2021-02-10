@@ -8,8 +8,9 @@ const bcrypt = require('bcrypt');
 exports.login = async (req, res) => {
   console.log('You make a get request');
   const params = req.query;
+  console.log(params);
   const nombreUsuario = params.nombreUsuario;
-  const contraseña = params.contraseña;
+  const contraseña = params.password;
   let isConsumidor = true;
   let isComerciante = true;
 

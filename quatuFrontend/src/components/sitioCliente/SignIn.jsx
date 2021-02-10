@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import "../../App.css";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import bcrypt from "bcrypt";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center" >
@@ -94,12 +95,14 @@ export default function SignIn() {
     var baseURL = `/api/login`;
     
     if(validateData()){
+        const hashPass = bcrypt.hashSync(User.contraseña, saltRounds); 
         axios.get(baseURL,
           {params:{
             nombreUsuario:User.nombreUsuario,
-            contraseña:User.contraseña}
+            password:hashPass}
           })
           .then(res => {
+            console.log(res.data);
             if(res.data.ok === false){
               alert("Usuario o contraseña incorrecta");
             }else if(res.data.ok){

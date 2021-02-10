@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
 export default function PaginaComerciante() {
   return (
     <Box>
+      <Router>
       <AppBarNav />
       <br />
-      <Router>
         <Switch>
           <Route path="/comerciantes/productos">
-            <ListaProductos
+            <ListaProductos 
               tiendaId={"600046678f25c125841686ad"}
               comercianteBool={true}
             />
@@ -41,8 +41,19 @@ export default function PaginaComerciante() {
             <EditarCuenta />
           </Route>
           <Route path="/comerciantes/eproducto">
-            <div>Editar Producto</div>
-            <FormularioEditarProducto />
+          <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justify="center"
+              style={{ minHeight: "100vh" }}
+            >
+              <Grid item xs={6}>
+                <FormularioEditarProducto/>
+              </Grid>
+            </Grid>
+
           </Route>
           <Route path={["/comerciantes/dashboard", "/comerciantes/"]}>
             <Grid

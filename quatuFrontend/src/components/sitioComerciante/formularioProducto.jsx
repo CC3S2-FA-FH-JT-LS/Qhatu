@@ -22,16 +22,6 @@ export default class FormularioProducto extends React.Component {
     super(props);
     
     this.state = props.producto;
-    /*
-    {
-      nombre: "Azúcar Rubia Bolsa 2 Kg",
-      precio: "4.5",
-      disponible: false,
-      descripcion: "Azúcar Rubia Bolsa 2 Kg marca blanca",
-      imagen:
-        "https://wongfood.vteximg.com.br/arquivos/ids/279721-750-750/Azucar-Rubia-Metro-Bolsa-2-Kg-1-44706.jpg",
-    };
-*/
     this.handleChangeFileBound = (event) => this.handleChangeFile(event);
     this.handleChangeDispBound = (event) => this.handleChangeDisponible(event);
     this.handleChangeBound = (event) => this.handleChange(event);

@@ -14,14 +14,18 @@ import "./App.css";
 export default function App() {
   return (
     
-    <Container style={{height:"100%"}}   maxWidth="lg" >
+    <Container style={{height:"100%"}}   maxWidth="false" >
         <Router>
           <Switch>
             <Route path="/comerciantes">
+              <Container style={{height:"100%"}}   maxWidth="lg" >
               <PaginaComerciante />
+              </Container>
             </Route>
             <Route path="/administracion">
+            <Container style={{height:"100%"}}   maxWidth="md" >
               <PaginaAdministrador />
+              </Container>
             </Route>
             <Route path="/singIn" >
               <SignIn />

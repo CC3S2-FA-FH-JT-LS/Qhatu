@@ -140,6 +140,7 @@ export default class BuscarTiendas extends Component {
           direction="column"
           justify="space-evenly"
           alignItems="center"
+          style={{maxHeight:"1000px"}}
         >
           <Grid
             container
@@ -149,7 +150,7 @@ export default class BuscarTiendas extends Component {
             justify="center"
             xs
           >
-            <Button onClick={this.handleChangeBound}>Buscar</Button>
+            <Button fullWidth onClick={this.handleChangeBound}>Buscar</Button>
           </Grid>
           <Grid
             container
@@ -177,16 +178,16 @@ export default class BuscarTiendas extends Component {
             justify="center"
             xs
           >
-            <Button component={Link} to="/singIn" color="inherit">
+            <Button fullWidth component={Link} to="/singIn" color="inherit">
               Iniciar Sesión
             </Button>
             <br />
-            <Button component={Link} to="/signupConsumidor" color="inherit">
-              Registrarse Consumidores
+            <Button fullWidth component={Link} to="/signupConsumidor" color="inherit">
+              Registrarse <br/> Consumidores
             </Button>
             <br />
-            <Button component={Link} to="/singUpComerciante" color="inherit">
-              Registrarse Comerciante
+            <Button fullWidth component={Link} to="/singUpComerciante" color="inherit">
+              Registrarse <br/> Comerciante
             </Button>
           </Grid>
         </Grid>

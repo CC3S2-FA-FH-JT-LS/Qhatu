@@ -5,10 +5,3 @@ body {
 html, body, div#root {
     height: 100%;
 }
-.text-color{
-    color: #428BFF;
-}
-.basic-bg{
-    background-color: #428BFF !important ;
-}
- 

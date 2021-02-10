@@ -5,7 +5,7 @@ const comercianteControllers = require('../controllers/comerciante');
 api.post('/add-producto', comercianteControllers.agregarProducto);
 
 api.get(
-  '/obtener-estadisticas-tienda',
+  '/obtener-estadisticas-tienda/:tiendaId',
   comercianteControllers.obtenerEstadisticasTienda
 );
 

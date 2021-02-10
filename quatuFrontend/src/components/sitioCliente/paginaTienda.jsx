@@ -22,13 +22,13 @@ export default function PaginaTienda(props) {
   return (
     <Grid container id="griT1" spacing={3}>
         
-        <Grid id="griT1"  item xs={6}>
+        <Grid id="griT1"  item xs={5}>
           <PanelDetallesTienda
             tiendaId={props.tiendaId}
           />
         </Grid>
 
-        <Grid id="griT2" item xs={6}>
+        <Grid id="griT2" item xs={7}>
           <ListaProductos />
         </Grid>
 

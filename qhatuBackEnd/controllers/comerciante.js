@@ -14,6 +14,7 @@ exports.agregarProducto = async (req, res) => {
   const descripcion = params.descripcion;
   const nombre = params.nombre;
   const precio = params.precio;
+  const imagen = params.imagen;
 
   try {
     const producto = new Producto();
@@ -21,7 +22,8 @@ exports.agregarProducto = async (req, res) => {
     producto.descripcion = descripcion;
     producto.nombre = nombre;
     producto.precio = precio;
-
+    producto.imagen = imagen;
+    
     const nuevoProducto = await producto.save();
     const tiendaActualizada = await Tienda.findByIdAndUpdate(
       tiendaId,
@@ -173,7 +175,7 @@ exports.eliminarCuenta = async (req, res) => {
 };
 
 exports.obtenerEstadisticasTienda = async (req, res) => {
-  const tiendaId = req.body.tiendaId;
+  const tiendaId = req.params.tiendaId;
   const estadisticas = {};
 
   try {

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
     },
     comment: {
-      maxWidth: 345,
+      width:"100%",
       maxHeight: 80,
       marginBottom: "10px",
    },
@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CardUsuario(props) {
     const contenido = props.contenido;
     return (
-      <Grid>
-        <Card className={useStyles().comment}>
+        <Card fullWidth className={useStyles().comment}>
           <CardHeader
             avatar={
               <Avatar
@@ -40,7 +39,6 @@ export default function CardUsuario(props) {
             title={contenido.usuario}
           />
         </Card>
-      </Grid>
     );
   }
   

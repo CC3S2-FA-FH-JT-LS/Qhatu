@@ -78,7 +78,7 @@ class ListaTiendas extends React.Component {
     const listItems = [];
     for (let i = 0; i < this.state.valores.length; i++) {
       if (
-        this.state.valores[i].nombre
+        this.state.valores[i].nombreTienda
           .toLowerCase()
           .includes(this.state.inputValue.toLowerCase())
       )
@@ -123,13 +123,13 @@ class ListaTiendas extends React.Component {
               </FormControl>
             </Grid>
 
-            <Grid id="gri3" item container fullHeight >
-              <GridList cellHeight={'300'} className={classes.gridList}>
+            <Grid id="gri3" item container>
+              <GridList cellHeight={300} className={classes.gridList}>
                 {this.filtro().map((value, index) => (
                   <GridListTile key={index}>
                     <img src={value.imagen} />
                     <GridListTileBar
-                      title={value.nombre}
+                      title={value.nombreTienda}
                       //                    subtitle={<span>by: {tile.author}</span>}
                       actionIcon={
                         <IconButton
@@ -154,8 +154,8 @@ class ListaTiendas extends React.Component {
             </Grid>
           </Grid>
         ) : (
-          <Grid container alignItems="Center">
-            <Grid item>
+          <Grid id="griL1" container style={{ heigth: '100%' }} alignItems="center">
+            <Grid id="griL2" style={{ heigth: '100%' }} item>
               <PaginaTienda tiendaId={this.state.tiendaId} />
             </Grid>
           </Grid>

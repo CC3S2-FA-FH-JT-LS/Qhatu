@@ -1,8 +1,9 @@
+body {
+    background-image: linear-gradient(-90deg,#1f308d 0%,#6b9ff3 100%);
+}
+
 html, body, div#root {
     height: 100%;
-}
-.gradient-bg {
-    background-image: linear-gradient(-135deg,#021686 0%,#428BFF 100%);
 }
 .text-color{
     color: #428BFF;

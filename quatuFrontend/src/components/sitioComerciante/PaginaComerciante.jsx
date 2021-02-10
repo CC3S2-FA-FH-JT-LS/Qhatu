@@ -25,53 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PaginaComerciante() {
-  const [tiendaObtenida, setTiendaObtenida] = React.useState({valoracion:1});
-  const [comentariosObtenidos, setComentariosObtenidos] = React.useState([]);
-
-  useEffect(() => {
-    axios.get("/api/mostrar-detalles-tienda",
-      {params:{
-        tiendaId :"600046678f25c125841686ad"
-      }
-      }
-    ).then((res)=>{
-      let laTienda = res.data.response
-      let miComerciante = laTienda.comercianteId
-      let miTienda = {
-        id: laTienda._id,
-        valoracion: parseInt(laTienda.valoracion) , //estrellas
-        nombre: miComerciante.nombreTienda,
-        descripcion:laTienda.informacionPuesto,
-        imagen:
-        "https://www.findevgateway.org/sites/default/files/inline-images/es_mujer_peruana_junto_a_su_puesto_de_verduras.jpg",}
-      
-      setTiendaObtenida(miTienda);
-    })
-
-
-    axios.get("/api/obtener-comentarios",
-    {params:{
-      tiendaId :"600046678f25c125841686ad"
-    }
-    }
-  ).then((res)=>{
-    let losComentarios = res.data.response.comentarios
-    let arrComentarios = losComentarios.map((comen,index) => 
-      ({
-        id: index,
-        valoracion: comen.valoracion, //estrellas
-        fechaPublicacion : "10/12/20",
-        contenido : comen.texto,
-
-        usuario:"Camila Perez",
-          imagen: "https://picsum.photos/seed/picsum/100",
-      })
-      ) 
-      setComentariosObtenidos(arrComentarios);
-  })
-  }, []);
-  
-
   return (
     <Box>
       <AppBarNav />
@@ -99,8 +52,7 @@ export default function PaginaComerciante() {
             >
               <Grid item xs={12}>
                 <PanelDetallesTienda
-                  tienda={tiendaObtenida}
-                  comentarios={comentariosObtenidos}
+                  tiendaId={"600046678f25c125841686ad"}
                   estadisticas={TiendaModels.estadisticasTiendaEjemplo()}
                 />
               </Grid>

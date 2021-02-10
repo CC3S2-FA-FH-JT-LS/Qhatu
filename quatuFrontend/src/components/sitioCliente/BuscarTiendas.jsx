@@ -66,7 +66,7 @@ const NestedList = () => {
           Filtrar
         </ListSubheader>
       }
-      className={classes.root - 'gradient-bg'}
+      className={classes.root}
     >
       <ListItem button>
         <ListItemText primary="Categorias" />
@@ -131,7 +131,7 @@ export default class BuscarTiendas extends Component {
         container
         style={{ height: '100%' }}
         spacing={3}
-        className="gradient-bg"
+        //className="gradient-bg"
       >
         <Grid
           container

@@ -52,26 +52,67 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PanelDetallesTienda(props) {
+
+  const [miTienda, setTiendaObtenida] = React.useState({valoracion:1});
+  const [comentarios, setComentariosObtenidos] = React.useState([
+    {
+      id: 0,
+      valoracion: 5, //estrellas
+      fechaPublicacion:"10/12/20",
+      contenido:
+        "Integer suscipit libero cursus ante porta, in porta diam aliquam In vel.",
+      usuario:"Camila Perez",
+        imagen: "https://picsum.photos/seed/picsum/100",
+    },]
+    );
+
   useEffect(() => {
+    axios.get("/api/mostrar-detalles-tienda",
+      {params:{
+        tiendaId : props.tiendaId
+      }
+      }
+    ).then((res)=>{
+      let laTienda = res.data.response
+      let miComerciante = laTienda.comercianteId
+      const miTienda = {
+        id: laTienda._id,
+        valoracion: parseInt(laTienda.valoracion) , //estrellas
+        nombre: miComerciante.nombreTienda,
+        descripcion:laTienda.informacionPuesto,
+        contacto:laTienda.contacto,
+        imagen:
+        miComerciante.imagen,
+      }
+      setTiendaObtenida(miTienda);
+    })
 
-    axios
-      .get('/api/obtener-comentarios', {
-        params: {
-          tiendaId: '600046678f25c125841686ad',
-        },
+    axios.get("/api/obtener-comentarios",
+    {params:{
+      tiendaId : props.tiendaId
+    }
+    }
+  ).then((res)=>{
+    let losComentarios = res.data.response.comentarios
+    let arrComentarios = losComentarios.map((comen,index) => 
+      ({
+        id: index,
+        valoracion: comen.valoracion, //estrellas
+        fechaPublicacion : "10/12/20",
+        contenido : comen.texto,
+
+        usuario:"Camila Perez",
+          imagen: "https://picsum.photos/seed/picsum/100",
       })
-      .then((res) => {
-      });
-
-
-  }, []);
+      ) 
+      setComentariosObtenidos(arrComentarios);
+  })
+  },[])
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [contacto, setContactado] = React.useState(false);
   const [comentar, setComentar] = React.useState(false);
-  const comentarios = props.comentarios; //TiendaModels.comentarios();
-  const miTienda = props.tienda;
 
   const estadisticas = props.estadisticas;
 
@@ -80,7 +121,7 @@ export default function PanelDetallesTienda(props) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card  className={classes.root}>
       <CardHeader title={miTienda.nombre} />
       <CardMedia
         className={classes.media}

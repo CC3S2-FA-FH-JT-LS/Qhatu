@@ -125,7 +125,7 @@ export default function SignIn() {
     }
   }
   return (
-    <div className="gradient-bg">
+    <div>
       <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>

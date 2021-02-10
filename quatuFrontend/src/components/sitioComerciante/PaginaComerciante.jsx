@@ -29,10 +29,6 @@ export default function PaginaComerciante() {
   const [comentariosObtenidos, setComentariosObtenidos] = React.useState([]);
 
   useEffect(() => {
-    
-    console.log("Antes de axios");
-
-
     axios.get("/api/mostrar-detalles-tienda",
       {params:{
         tiendaId :"600046678f25c125841686ad"
@@ -59,10 +55,6 @@ export default function PaginaComerciante() {
     }
     }
   ).then((res)=>{
-    console.log("mensajes: ");
-    console.log(res);
-    console.log("Comentarios---------------------: ");
-    console.log(res.data.response.comentarios);
     let losComentarios = res.data.response.comentarios
     let arrComentarios = losComentarios.map((comen,index) => 
       ({
@@ -75,14 +67,8 @@ export default function PaginaComerciante() {
           imagen: "https://picsum.photos/seed/picsum/100",
       })
       ) 
-
-      console.log("Formateados---------------------: ");
-      console.log(arrComentarios);
       setComentariosObtenidos(arrComentarios);
   })
-
-
-    console.log("-----------------------------");
   }, []);
   
 

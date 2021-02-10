@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PanelDetallesTienda(props) {
   useEffect(() => {
-    console.log('Antes de axios');
 
     axios
       .get('/api/obtener-comentarios', {
@@ -62,11 +61,9 @@ export default function PanelDetallesTienda(props) {
         },
       })
       .then((res) => {
-        console.log('mensajes: ');
-        console.log(res);
       });
 
-    console.log('-----------------------------');
+
   }, []);
 
   const classes = useStyles();
@@ -75,12 +72,9 @@ export default function PanelDetallesTienda(props) {
   const [comentar, setComentar] = React.useState(false);
   const comentarios = props.comentarios; //TiendaModels.comentarios();
   const miTienda = props.tienda;
-  console.log('Desde panel:');
-  console.log(miTienda);
 
   const estadisticas = props.estadisticas;
 
-  console.log(miTienda);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

@@ -48,8 +48,6 @@ export default class FormularioProducto extends React.Component {
     this.setState({
       [event.target.name]:event.target.value 
     })
-    console.log("Propiedad",event.target.name);
-    console.log("Nuevo estado",this.state);
   }
   handleChangeDisponible(event){
     this.setState({

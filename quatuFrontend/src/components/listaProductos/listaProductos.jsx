@@ -63,7 +63,6 @@ class ListaProductos extends React.Component {
     this.toggleChecked = this.toggleChecked.bind(this);
   }
   toggleChecked(event) {
-    console.log("Hola como estas", event.target.checked);
     this.setState({
       [event.target.name]: event.target.checked,
       showBool: event.target.checked,
@@ -125,8 +124,6 @@ class ListaProductos extends React.Component {
     }
     axios.delete("/api/delete-producto",{data: dataProducto})
     .then(res => {
-      console.log(res);
-      console.log(res.data);
     })
     .catch(error => console.log(error));
   }
@@ -197,7 +194,6 @@ class ListaProductos extends React.Component {
                                 size="small" 
                                 className={classes.cardButtonEdit} aria-label="like" 
                                 onClick={() => {
-                                         console.log(this.state.valores.indexOf(value));
                                     }}
                                     component={Link}  to="/comerciantes/eproducto"   
                                     >

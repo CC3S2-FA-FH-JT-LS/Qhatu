@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Comentario(props) {
     const contenido = props.contenido;
-    console.log(contenido);
     return (
       <Grid>
         <Card className={useStyles().comment}>

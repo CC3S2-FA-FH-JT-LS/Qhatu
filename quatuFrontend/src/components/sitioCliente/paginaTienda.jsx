@@ -31,14 +31,12 @@ export default function PaginaTienda(props) {
     );
 
   useEffect(() => {
-    console.log(props.tiendaId);
     axios.get("/api/mostrar-detalles-tienda",
       {params:{
         tiendaId : props.tiendaId
       }
       }
     ).then((res)=>{
-      console.log(res.data);
       let laTienda = res.data.response
       let miComerciante = laTienda.comercianteId
       const miTienda = {
@@ -59,10 +57,6 @@ export default function PaginaTienda(props) {
     }
     }
   ).then((res)=>{
-    console.log("mensajes: ");
-    console.log(res);
-    console.log("Comentarios---------------------: ");
-    console.log(res.data.response.comentarios);
     let losComentarios = res.data.response.comentarios
     let arrComentarios = losComentarios.map((comen,index) => 
       ({
@@ -76,8 +70,6 @@ export default function PaginaTienda(props) {
       })
       ) 
 
-      console.log("Formateados---------------------: ");
-      console.log(arrComentarios);
       setComentariosObtenidos(arrComentarios);
   })
   },[])

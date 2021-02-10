@@ -53,11 +53,10 @@ class EliminacionComerciante extends React.Component {
   componentDidMount = () => {
     this._isMounted=true;
     axios.get("/api/get-comerciantes").then(response => {
-      console.log(response);
-      console.log(response.data);
       this.setState({
         valores:response.data.message
       });
+      console.log(this.state.valores);
     });
     /*const user={
       nombre : "Leo",
@@ -83,8 +82,6 @@ class EliminacionComerciante extends React.Component {
     };
     axios.post(`/api/registrar-comerciante`,comercio)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
     });
   };
   handleInputChange(event) {
@@ -97,7 +94,7 @@ class EliminacionComerciante extends React.Component {
     const listItems = [];
     var j=0;
     for (let i = 0; i < this.state.valores.length; i++) {
-      if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase())){
+      if(this.state.valores[i].nombre.toLowerCase().includes(this.state.inputValue.toLowerCase()) || this.state.inputValue.toLowerCase()==" "){
         listItems[j] = this.state.valores[i];
         j++;
       }
@@ -110,8 +107,6 @@ class EliminacionComerciante extends React.Component {
     }
     axios.delete("/api/delete-comerciante",{data: comerciante})
     .then(res => {
-      console.log(res);
-      console.log(res.data);
     })
     .catch(error => console.log(error));
   }

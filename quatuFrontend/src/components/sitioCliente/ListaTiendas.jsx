@@ -138,15 +138,10 @@ class ListaTiendas extends React.Component {
                           onClick={() => {
                             this.setState({
                               tiendaId: value.tiendaId,
-                            });
-                            console.log(
-                              'DSADSADADASDASDADSDSASADS',
-                              value.tiendaId
-                            );
+                            });                        
                             this.setState({
                               mostrarDetalles: !this.state.mostrarDetalles,
                             });
-                            console.log(this.state.mostrarDetalles);
                           }}
                         >
                           <InfoIcon />

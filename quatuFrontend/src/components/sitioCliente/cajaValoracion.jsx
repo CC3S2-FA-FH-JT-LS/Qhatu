@@ -13,6 +13,7 @@ class CajaValoracion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      propa: props,
       valoracion: 0,
       comentario: " ",
       consumidorId:"601c0b6920877433ece8c15b",
@@ -30,7 +31,6 @@ class CajaValoracion extends React.Component {
     });
   }
   toggleChecked(event) {
-    console.log("Hola como estas", event.target.checked);
     this.setState({
       [event.target.name]: event.target.checked,
     });
@@ -45,10 +45,7 @@ class CajaValoracion extends React.Component {
     }
     axios.post(`/api/dejar-comentario`,comentario)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
     });
-    alert("Datos: " + JSON.stringify(this.state));
     event.preventDefault();
   }
 

@@ -15,7 +15,6 @@ import Container from "@material-ui/core/Container";
 import "../../App.css";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import bcrypt from "bcrypt";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center" >
@@ -95,11 +94,12 @@ export default function SignIn() {
     var baseURL = `/api/login`;
     
     if(validateData()){
-        const hashPass = bcrypt.hashSync(User.contraseña, saltRounds); 
+        //const hashPass = bcrypt.hashSync(User.contraseña, saltRounds); 
+
         axios.get(baseURL,
           {params:{
             nombreUsuario:User.nombreUsuario,
-            password:hashPass}
+            contraseña:User.contraseña}
           })
           .then(res => {
             console.log(res.data);
@@ -108,16 +108,20 @@ export default function SignIn() {
             }else if(res.data.ok){
               alert("Login correcto");
               role=res.data.rol;
-              id = res.data.response._id;
-              idTienda = res.data.response.tiendaId;  
+              console.log(res.data);
+              if(role==="comerciante"){
+                alert("comerciante")
+                history.push('/comerciantes')
+                id = res.data.comerciante._id;
+                idTienda = res.data.comerciante.tiendaId;  
+              }else if(role === "consumidor"){
+                alert("consumidor")
+                history.push('/consumidor')
+                id = res.data.consumidor._id;  
+              }
               localStorage.setItem('myRole',role);
               localStorage.setItem('myId',id);
               localStorage.setItem('myStore',id);
-              if(role==="comerciante"){
-                history.push('/comerciantes')
-              }else if(role === "consumidor"){
-                history.push('/consumidor')
-              }
             }else{
               alert("Usuario no registrado");
             }

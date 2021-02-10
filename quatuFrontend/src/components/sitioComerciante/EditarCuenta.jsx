@@ -16,6 +16,7 @@ export default function EditarCuenta() {
     categoria: "",
     imagen: ""
   });
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     console.log("Hola -------")
     let tienda_id = localStorage.getItem('myStore');
@@ -51,6 +52,7 @@ export default function EditarCuenta() {
         console.log(usuarioComerciante)*/
         //usuarioComerciante = data;
         setComerciante(data);
+        setFlag(true);
         console.log("Usuario luego de set \n",usuarioComerciante);
       })
       .catch(error => {
@@ -67,7 +69,11 @@ export default function EditarCuenta() {
   return (
     
     <div>
-      <FormularioComerciante comerciante={usuarioComerciante}></FormularioComerciante>
+      { 
+        (flag)?
+        <FormularioComerciante arioComerciante comerciante={usuarioComerciante}></FormularioComerciante>:
+        <div></div>
+      }
     </div>
   );
 }

@@ -7,7 +7,7 @@ import theme from './theme';
 import './commons/commons.css';
 
 ReactDOM.render(
-  <ThemeProvider theme={theme} className="gradient-bg">
+  <ThemeProvider theme={theme} >
     <CssBaseline />
     <App />
   </ThemeProvider>,

@@ -98,11 +98,8 @@ export default function SignUpConsumidor() {
   const handleSubmit=(event) => {
     event.preventDefault();
     if(validateData()){
-      newUser["imagen"]="newImage";
       axios.post("/api/registrar-consumidor", newUser )
         .then(res => {
-          console.log(res);
-          console.log(res.data);
           if(res.data.unico === false){
             alert("El nombre de usuario ingresado ya existe");
           }else if(res.data.ok){
@@ -116,8 +113,14 @@ export default function SignUpConsumidor() {
     }
   
   }
-
-
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); 
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -186,6 +189,16 @@ export default function SignUpConsumidor() {
               <DropzoneArea
                 acceptedFiles={["image/*"]}
                 dropzoneText={"Arrastre la foto de perfil"}
+                onDrop={e => {
+                  var promesa;
+                  var base64;
+                  e.forEach(item =>
+                    promesa=getBase64(item)
+                  );
+                  promesa.then(function(result) {
+                    newUser.imagen=result;  
+                  });
+                }}
               />
             </Grid>
             <Grid item xs={12}>

@@ -68,7 +68,6 @@ export default function SignIn() {
     }
     userdata[name]=event.target.value;
     setUser(userdata);
-    console.log(User)
   };
 
   const validateData = ()=>{
@@ -101,17 +100,13 @@ export default function SignIn() {
             password:User.contraseña}
           })
           .then(res => {
-            console.log(res);
-            console.log(res.data);
             if(res.data.ok === false){
               alert("Usuario o contraseña incorrecta");
             }else if(res.data.ok){
               alert("Login correcto");
-              console.log(res.data);
               role=res.data.rol;
               id = res.data.response._id;
-              idTienda = res.data.response.tiendaId;
-              console.log("role: "+role + " id: "+id);
+              idTienda = res.data.response.tiendaId;  
               localStorage.setItem('myRole',role);
               localStorage.setItem('myId',id);
               localStorage.setItem('myStore',id);
@@ -130,7 +125,7 @@ export default function SignIn() {
     }
   }
   return (
-    <div className="gradient-bg">
+    <div>
       <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>

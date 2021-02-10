@@ -3,6 +3,7 @@
 const Comerciante = require('../models/comerciante');
 const Consumidor = require('../models/consumidor');
 const Tienda = require('../models/tienda');
+const bcrypt = require('bcrypt');
 
 exports.registrarComerciante = async (req, res) => {
   const params = req.body;
@@ -28,7 +29,6 @@ exports.registrarComerciante = async (req, res) => {
   try {
     const comerciante = new Comerciante();
     comerciante.contacto = contacto;
-    comerciante.contraseña = contraseña;
     comerciante.nombre = nombre;
     comerciante.nombreUsuario = nombreUsuario;
     comerciante.nombreTienda = nombreTienda;
@@ -44,6 +44,9 @@ exports.registrarComerciante = async (req, res) => {
         response: 'El usuario ya existe.',
       });
     }
+    const hash = bcrypt.hashSync(contraseña, 10);
+    comerciante.contraseña = hash;
+
     const nuevoComerciante = await comerciante.save();
 
     const tienda = new Tienda();
@@ -84,7 +87,6 @@ exports.registrarConsumidor = async (req, res) => {
     const consumidor = new Consumidor();
     consumidor.nombre = nombre;
     consumidor.nombreUsuario = nombreUsuario;
-    consumidor.contraseña = contraseña;
     consumidor.imagen = imagen;
     const unicoConsumidor = await Consumidor.findOne({ nombreUsuario });
     if (unicoConsumidor) {
@@ -94,6 +96,10 @@ exports.registrarConsumidor = async (req, res) => {
         response: 'El usuario ya existe.',
       });
     }
+
+    const hash = bcrypt.hashSync(contraseña, 10);
+    consumidor.contraseña = hash;
+
     const nuevoConsumidor = await consumidor.save();
 
     return res.status(200).json({

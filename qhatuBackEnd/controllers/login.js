@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
         });
       }
     }
-  } catch (error) {
+  } catch (exception) {
     return res.status(500).json({
       ok: false,
       message: `${exception}`,

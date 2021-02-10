@@ -8,7 +8,16 @@ class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      User:{}
+      User: {
+        nombre: "",
+        nombreUsuario: "",
+        contacto: "",
+        numeroPuesto: "",
+        nombreTienda: "",
+        informacionPuesto: "",
+        categoria: "abarrotes",
+        imagen: "https://source.unsplash.com/random",
+      }
     };
     this.handleMount = this.handleMount.bind(this);
   }

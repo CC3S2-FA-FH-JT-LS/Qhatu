@@ -96,7 +96,7 @@ export default function SignIn() {
     
     if(validateData()){
         axios.get(baseURL,
-          {parasm:{
+          {params:{
             nombreUsuario:User.nombreUsuario,
             password:User.contraseña}
           })
@@ -120,6 +120,8 @@ export default function SignIn() {
               }else if(role === "consumidor"){
                 history.push('/consumidor')
               }
+            }else{
+              alert("Usuario no registrado");
             }
           })
           .catch(error => {

@@ -142,7 +142,7 @@ export default function PanelDetallesTienda(props) {
       </CardContent>
 
       <CardActions disableSpacing>
-        {props.consumidorId!=null &&<Button
+        {localStorage.getItem("myRole")==="consumidor" &&<Button
           variant="contained"
           className={classes.btn}
           onClick={() => {
@@ -152,7 +152,7 @@ export default function PanelDetallesTienda(props) {
         >
           Contacto
         </Button>}
-        {props.consumidorId!=null && <Button
+        {localStorage.getItem("myRole")==="consumidor" && <Button
           variant="contained"
           onClick={() => {
             setComentar(!comentar);

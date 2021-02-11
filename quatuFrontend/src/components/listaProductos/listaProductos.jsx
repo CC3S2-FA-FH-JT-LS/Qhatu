@@ -90,7 +90,7 @@ class ListaProductos extends React.Component {
         }
       } else {
         if (
-          this.state.valores[i].estado == 'no disponible' &&
+          this.state.valores[i].estado == "no disponible" &&
           this.state.valores[i].nombre
             .toLowerCase()
             .includes(this.state.inputValue.toLowerCase())

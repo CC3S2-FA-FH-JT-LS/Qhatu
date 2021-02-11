@@ -198,7 +198,6 @@ export default function SignUpConsumidor() {
                 dropzoneText={"Arrastre la foto de perfil"}
                 onDrop={e => {
                   var promesa;
-                  var base64;
                   e.forEach(item =>
                     promesa=getBase64(item)
                   );

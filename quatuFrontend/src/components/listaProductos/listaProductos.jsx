@@ -176,7 +176,7 @@ class ListaProductos extends React.Component {
               />
             </Grid>
             <Grid item xs={2}>
-              <Button
+              { localStorage.getItem("myRole") == "comerciante" && <Button
                 component={Link}  
                 to="/comerciantes/nuevop"
                 variant="contained"
@@ -185,7 +185,7 @@ class ListaProductos extends React.Component {
                 fullWidth
               >
                 Nuevo Producto
-              </Button>
+              </Button>}
             </Grid>
           </Grid>
 

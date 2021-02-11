@@ -162,13 +162,13 @@ export default class BuscarTiendas extends Component {
           >
             {/*<NestedList></NestedList> */}
 
-            <CardUsuario
+            { localStorage.getItem("myId")!=null &&<CardUsuario
               contenido={{
                 imagen:
-                  'https://i.ebayimg.com/images/g/daYAAOSwt05ZrHcv/s-l300.jpg',
-                usuario: 'Pepe Navarrro',
+                localStorage.getItem("myImage"),
+                usuario: localStorage.getItem("myName"),
               }}
-            />
+            />}
           </Grid>
           <Grid
             container
@@ -178,17 +178,17 @@ export default class BuscarTiendas extends Component {
             justify="center"
             xs
           >
-            <Button fullWidth component={Link} to="/singIn" color="inherit">
+            {localStorage.getItem("myId")==null &&<Button fullWidth component={Link} to="/singIn" color="inherit">
               Iniciar Sesión
-            </Button>
+            </Button>}
             <br />
-            <Button fullWidth component={Link} to="/signupConsumidor" color="inherit">
+            {localStorage.getItem("myId")==null &&<Button fullWidth component={Link} to="/signupConsumidor" color="inherit">
               Registrarse <br/> Consumidores
-            </Button>
+            </Button>}
             <br />
-            <Button fullWidth component={Link} to="/singUpComerciante" color="inherit">
+            {localStorage.getItem("myId")==null &&<Button fullWidth component={Link} to="/singUpComerciante" color="inherit">
               Registrarse <br/> Comerciante
-            </Button>
+            </Button>}
           </Grid>
         </Grid>
 

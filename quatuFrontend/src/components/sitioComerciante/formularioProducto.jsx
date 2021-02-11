@@ -27,6 +27,7 @@ export default class FormularioProducto extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.producto;
+    this.state.img=" ";
     this.state.idProps = props.idProducto;
     this.state.tiendaIdNUeva = props.tiendaId;
     this.handleChangeFileBound = (event) => this.handleChangeFile(event);
@@ -76,18 +77,19 @@ export default class FormularioProducto extends React.Component {
     event.preventDefault();
     if (!(this.state.tiendaIdNUeva)){
       console.log("Actualizando producto ============================");
-
-    let productoAEnviar ={
-      productoId:this.state.idProps,
-      update:{    
-        "estado": this.state.disponible.toString(),
-        "descripcion": this.state.descripcion,
-        "nombre": this.state.nombre,
-        "precio":this.state.precio,
-        "imagen": this.state.imagen,
+      let productoAEnviar ={
+        productoId:this.state.idProps,
+        update:{    
+          "estado": this.state.disponible.toString(),
+          "descripcion": this.state.descripcion,
+          "nombre": this.state.nombre,
+          "precio":this.state.precio,
+          "imagen": this.state.imagen,
+        } 
+      };
+      if(localStorage.getItem("imagen")!=null){
+        productoAEnviar.update.imagen=localStorage.getItem("imagen");
       }
-      
-    };
     axios.put(
       "/api/update-producto", productoAEnviar
       );             
@@ -100,14 +102,13 @@ export default class FormularioProducto extends React.Component {
         "descripcion": this.state.descripcion,
         "nombre": this.state.nombre,
             "precio":this.state.precio,
-            "imagen": this.state.imagen,
-  
+            "imagen": localStorage.getItem("imagen"),
       };
-  
+      
       axios.post(
         "/api/add-producto", productoAEnviar
-        );             
-
+      );             
+      localStorage.removeItem("imagen");;
     }
 
 
@@ -125,7 +126,14 @@ export default class FormularioProducto extends React.Component {
       disponible: !this.state.disponible,
     });
   }
-
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); 
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+  }
   render() {
     return (
       <React.Fragment>
@@ -215,6 +223,15 @@ export default class FormularioProducto extends React.Component {
                 acceptedFiles={['image/*']}
                 dropzoneText={'Arrastre la foto de su producto '}
                 onChange={this.handleChangeFileBound}
+                onDrop={e => {
+                  var promesa;
+                  e.forEach(item =>
+                    promesa=this.getBase64(item)
+                  );
+                  promesa.then(function(result) {
+                    localStorage.setItem("imagen",result);
+                  });
+                }}
               />
             </Grid>
             <Grid item xs={12}>

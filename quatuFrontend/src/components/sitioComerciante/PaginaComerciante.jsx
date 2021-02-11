@@ -40,21 +40,11 @@ export default function PaginaComerciante() {
           <Route path="/comerciantes/editar">
             <EditarCuenta />
           </Route>
-          <Route path="/comerciantes/eproducto">
-          <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justify="center"
-              style={{ minHeight: "100vh" }}
-            >
-              <Grid item xs={6}>
-                <FormularioEditarProducto/>
-              </Grid>
-            </Grid>
-
+          <Route path="/comerciantes/nuevop">
+            <FormularioNuevoProducto tiendaId={"600046678f25c125841686ad"}/>
           </Route>
+          <Route path="/comerciantes/eproducto/:id"  children={<FormularioEditarProducto/>}/>
+          
           <Route path={["/comerciantes/dashboard", "/comerciantes/"]}>
             <Grid
               container

@@ -53,6 +53,8 @@ exports.agregarProducto = async (req, res) => {
 };
 
 exports.editarProducto = async (req, res) => {
+  console.log("Llamado a editar producto");
+
   const params = req.body;
   const productoId = params.productoId;
   const update = params.update;

@@ -80,7 +80,7 @@ class ListaProductos extends React.Component {
     for (let i = 0; i < this.state.valores.length; i++) {
       if (!actualCheck) {
         if (
-          this.state.valores[i].nombre
+          this.state.valores[i].nombre 
             .toLowerCase()
             .includes(this.state.inputValue.toLowerCase()) ||
           this.state.inputValue.toLowerCase() == ' '
@@ -90,7 +90,7 @@ class ListaProductos extends React.Component {
         }
       } else {
         if (
-          this.state.valores[i].estado == 'no disponible' &&
+          this.state.valores[i].estado == "no disponible" &&
           this.state.valores[i].nombre
             .toLowerCase()
             .includes(this.state.inputValue.toLowerCase())

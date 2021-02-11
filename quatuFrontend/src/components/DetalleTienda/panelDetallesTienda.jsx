@@ -93,6 +93,7 @@ export default function PanelDetallesTienda(props) {
     }
     }
   ).then((res)=>{
+    
     let losComentarios = res.data.response.comentarios
     let arrComentarios = losComentarios.map((comen,index) => 
       ({
@@ -101,8 +102,8 @@ export default function PanelDetallesTienda(props) {
         fechaPublicacion : "10/12/20",
         contenido : comen.texto,
 
-        usuario:"Camila Perez",
-          imagen: "https://picsum.photos/seed/picsum/100",
+        usuario:comen.consumidorId.nombre,
+          imagen: comen.consumidorId.imagen,
       })
       ) 
       setComentariosObtenidos(arrComentarios);

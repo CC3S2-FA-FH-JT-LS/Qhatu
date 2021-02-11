@@ -15,7 +15,7 @@ class CajaValoracion extends React.Component {
     this.state = {
       valoracion: 0,
       comentario: " ",
-      consumidorId: props.consumidorId,
+      consumidorId: localStorage.getItem("myId"),
       tiendaId: props.tiendaId,
     };
 
@@ -42,6 +42,7 @@ class CajaValoracion extends React.Component {
       "valoracion":this.state.valoracion,
       "texto":this.state.comentario,
     }
+    console.log(comentario);
     axios.post(`/api/dejar-comentario`,comentario)
       .then(res => {
     });

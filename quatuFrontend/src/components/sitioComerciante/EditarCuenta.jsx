@@ -71,7 +71,7 @@ export default function EditarCuenta() {
     <div>
       { 
         (flag)?
-        <FormularioComerciante arioComerciante comerciante={usuarioComerciante}></FormularioComerciante>:
+        <FormularioComerciante componentTitle="EditarCuenta" comerciante={usuarioComerciante}></FormularioComerciante>:
         <div></div>
       }
     </div>

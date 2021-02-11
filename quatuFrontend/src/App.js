@@ -18,9 +18,21 @@ export default function App() {
         <Router>
           <Switch>
             <Route path="/comerciantes">
+              {localStorage.getItem("myRole")==="comerciante"  && 
               <Container style={{height:"100%"}}   maxWidth="lg" >
               <PaginaComerciante />
               </Container>
+              }
+              {localStorage.getItem("myRole")==="consumidor"  && 
+              <Container style={{height:"100%"}}   maxWidth="lg" >
+              <SignUpComerciante/>
+              </Container>
+              }
+              {localStorage.getItem("myRole")===null &&
+                <Container style={{height:"100%"}}   maxWidth="lg" >
+                <BuscarTiendas/>
+                </Container>
+              }
             </Route>
             <Route path="/administracion">
             <Container style={{height:"100%"}}   maxWidth="md" >

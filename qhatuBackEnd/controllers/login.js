@@ -17,7 +17,7 @@ exports.login = async (req, res) => {
   try {
     const comerciante = await Comerciante.findOne({ nombreUsuario }).exec();
     const consumidor = await Consumidor.findOne({ nombreUsuario }).exec();
-
+    console.log(comerciante);
     if (!comerciante) {
       isComerciante = false;
     } else if (!consumidor) {

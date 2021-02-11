@@ -32,7 +32,8 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   container:{
-    padding:"20"
+    padding:"20",
+    backgroundColor:"white",
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
-    padding: "20"
+    padding: "20",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -128,117 +129,116 @@ export default function SignUpConsumidor() {
     });
   }
   return (
-    <div  >
-      <Container component="main" maxWidth="xs" className={`${classes.container}`}>
+    <Container component="main" maxWidth="xs" className={`${classes.container}`}>
+    <div className={classes.container}>
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Registrate
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                autoComplete="Nombre"
-                name="nombre"
-                variant="outlined"
-                required
-                fullWidth
-                id="NombreConsumidor"
-                label="Nombre"
-                autoFocus
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                autoComplete="NombreUsuario"
-                name="nombreUsuario"
-                variant="outlined"
-                required
-                fullWidth
-                id="NombreConsumidorUsuario"
-                label="Nombre de Usuario(Nickname)"
-                autoFocus
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="contraseña"
-                label="Contraseña"
-                type="password"
-                id="Contraseña"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmar_contraseña"
-                label="Confirmar contraseña"
-                type="password"
-                id="confirmar_contraseña"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <DropzoneArea
-                acceptedFiles={["image/*"]}
-                dropzoneText={"Arrastre la foto de perfil"}
-                onDrop={e => {
-                  var promesa;
-                  e.forEach(item =>
-                    promesa=getBase64(item)
-                  );
-                  promesa.then(function(result) {
-                    newUser.imagen=result;  
-                  });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Acepto cumplir con las normas establecidas por el Sistema Qhatu"
-                onChange={handleTerminos}
-              />
-            </Grid>
+    <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Registrate
+      </Typography>
+      <form className={classes.form} noValidate>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              autoComplete="Nombre"
+              name="nombre"
+              variant="outlined"
+              required
+              fullWidth
+              id="NombreConsumidor"
+              label="Nombre"
+              autoFocus
+              onChange={handleChange}
+            />
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Registrarse
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              autoComplete="NombreUsuario"
+              name="nombreUsuario"
+              variant="outlined"
+              required
+              fullWidth
+              id="NombreConsumidorUsuario"
+              label="Nombre de Usuario(Nickname)"
+              autoFocus
+              onChange={handleChange}
+            />
           </Grid>
-        </form>
-        </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="contraseña"
+              label="Contraseña"
+              type="password"
+              id="Contraseña"
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="confirmar_contraseña"
+              label="Confirmar contraseña"
+              type="password"
+              id="confirmar_contraseña"
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <DropzoneArea
+              acceptedFiles={["image/*"]}
+              dropzoneText={"Arrastre la foto de perfil"}
+              onDrop={e => {
+                var promesa;
+                e.forEach(item =>
+                  promesa=getBase64(item)
+                );
+                promesa.then(function(result) {
+                  newUser.imagen=result;  
+                });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox value="allowExtraEmails" color="primary" />}
+              label="Acepto cumplir con las normas establecidas por el Sistema Qhatu"
+              onChange={handleTerminos}
+            />
+          </Grid>
+        </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={handleSubmit}
+        >
+          Registrarse
+        </Button>
+        <Grid container justify="flex-end">
+          <Grid item>
+            <Link href="#" variant="body2">
+              Already have an account? Sign in
+            </Link>
+          </Grid>
+        </Grid>
+      </form>
       </div>
-    
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+      </div>
+    </Container>
   );
 }

@@ -45,7 +45,7 @@ export default function PaginaComerciante() {
           </Route>
           <Route path="/comerciantes/eproducto/:id"  children={<FormularioEditarProducto/>}/>
           
-          <Route path={["/comerciantes/dashboard", "/comerciantes/"]}>
+          <Route path={["/comerciantes/dashboard", "/comerciantes","/"]}>
             <Grid
               container
               spacing={0}

@@ -10,14 +10,14 @@ exports.login = async (req, res) => {
   const params = req.query;
   console.log(params);
   const nombreUsuario = params.nombreUsuario;
-  const contraseña = params.contraseña;
+  const contraseña = params.password;
   let isConsumidor = true;
   let isComerciante = true;
 
   try {
     const comerciante = await Comerciante.findOne({ nombreUsuario }).exec();
     const consumidor = await Consumidor.findOne({ nombreUsuario }).exec();
-
+    console.log(comerciante);
     if (!comerciante) {
       isComerciante = false;
     } else if (!consumidor) {

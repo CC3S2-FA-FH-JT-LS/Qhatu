@@ -99,7 +99,7 @@ export default function SignIn() {
         axios.get(baseURL,
           {params:{
             nombreUsuario:User.nombreUsuario,
-            contraseña:User.contraseña}
+            password:User.contraseña}
           })
           .then(res => {
             console.log(res.data);

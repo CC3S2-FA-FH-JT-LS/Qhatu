@@ -25,7 +25,7 @@ export default function EditarCuenta() {
       console.log("consulta sobre "+tienda_id);
       axios.get("/api/mostrar-detalles-tienda",
       {params:{
-      tiendaId : "600046678f25c125841686ad",
+      tiendaId : localStorage.getItem("myStore"),
       }
       }
       ).then((res)=>{

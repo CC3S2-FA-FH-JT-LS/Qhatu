@@ -33,7 +33,7 @@ export default function PaginaComerciante() {
         <Switch>
           <Route path="/comerciantes/productos">
             <ListaProductos 
-              tiendaId={"600046678f25c125841686ad"}
+              tiendaId= {localStorage.getItem("myStore")}
               comercianteBool={true}
             />
           </Route>
@@ -41,11 +41,11 @@ export default function PaginaComerciante() {
             <EditarCuenta />
           </Route>
           <Route path="/comerciantes/nuevop">
-            <FormularioNuevoProducto tiendaId={"600046678f25c125841686ad"}/>
+            <FormularioNuevoProducto tiendaId={localStorage.getItem("myStore")}/>
           </Route>
           <Route path="/comerciantes/eproducto/:id"  children={<FormularioEditarProducto/>}/>
           
-          <Route path={["/comerciantes/dashboard", "/comerciantes/"]}>
+          <Route path={["/comerciantes/dashboard", "/comerciantes","/"]}>
             <Grid
               container
               spacing={0}
@@ -56,7 +56,7 @@ export default function PaginaComerciante() {
             >
               <Grid item xs={12}>
                 <PanelDetallesTienda
-                  tiendaId={"600046678f25c125841686ad"}
+                  tiendaId={localStorage.getItem("myStore")}
                   estadisticas={TiendaModels.estadisticasTiendaEjemplo()}
                 />
               </Grid>

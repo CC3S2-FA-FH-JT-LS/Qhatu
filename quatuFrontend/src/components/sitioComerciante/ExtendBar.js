@@ -20,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ExtendBar() {
   const classes = useStyles();
-
+  const handleLogOut = ()=>{
+    localStorage.clear();
+    window.location.reload(false);
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -31,6 +34,7 @@ export default function ExtendBar() {
           <Button component={Link}  to="/comerciantes/productos" color="inherit">Productos</Button>
           <Button component={Link} to="/comerciantes/dashboard" color="inherit">Dashboard</Button>
           <Button component={Link} to="/comerciantes/editar" color="inherit">Cuenta</Button>
+          <Button onClick={handleLogOut} color="inherit">Log Out</Button>
         </Toolbar>
       </AppBar>
     </div>

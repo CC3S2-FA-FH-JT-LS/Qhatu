@@ -14,7 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../../App.css";
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, BrowserRouter as Router, Switch, Route} from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center" >
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   let history = useHistory();
   const [User, setUser] = React.useState({nombreUsuario:"",contraseña:""});
@@ -69,7 +70,7 @@ export default function SignIn() {
     userdata[name]=event.target.value;
     setUser(userdata);
   };
-
+  const sendMyFlag = props.sendRole;
   const validateData = ()=>{
     let isValid = true;
     let isDataCompleted=true;
@@ -105,28 +106,30 @@ export default function SignIn() {
             console.log(res.data);
             var role,id,idTienda,nombre,imagen;
             if(res.data.ok === false){
-              alert("Usuario o contraseña incorrecta");
+              //alert("Usuario o contraseña incorrecta");
             }else if(res.data.ok){
-              alert("Login correcto");
+              //alert("Login correcto");
               role=res.data.rol;
+              sendMyFlag(true);
               console.log(res.data);
+              localStorage.setItem('myRole',role);
               if(role==="comerciante"){
-                alert("comerciante")
-                history.push('/comerciantes')
+                //alert("comerciante")
                 id = res.data.comerciante._id;
                 idTienda = res.data.comerciante.tiendaId;
-                nombre=res.data.comerciante.nombre;  
+                nombre=res.data.comerciante.nombre; 
+                localStorage.setItem('myStore',idTienda); 
+                history.push('/comerciantes')
               }else if(role === "consumidor"){
-                alert("consumidor")
-                history.push('/consumidor')
+                //alert("consumidor")
                 id = res.data.consumidor._id;  
                 nombre=res.data.consumidor.nombre;
                 imagen=res.data.consumidor.imagen;
                 localStorage.setItem('myImage',imagen);
+                history.push('/consumidor')
               }
-              localStorage.setItem('myRole',role);
+              localStorage.setItem('token',res.data.token)
               localStorage.setItem('myId',id);
-              localStorage.setItem('myStore',id);
               localStorage.setItem('myName',nombre);
             }else{
               alert("Usuario no registrado");

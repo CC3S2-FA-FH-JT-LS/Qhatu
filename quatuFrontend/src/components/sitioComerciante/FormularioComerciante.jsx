@@ -111,6 +111,7 @@ export default function FormularioComerciante(props) {
           })
           .catch(error => {
             console.error('There was an error!', error);
+            alert("Vuelva a intentarlo")
           });
       }
     }else{
@@ -127,6 +128,7 @@ export default function FormularioComerciante(props) {
           })
           .catch(error => {
             console.error('There was an error!', error);
+            alert("Vuelva a intentarlo")
           });
       }
     }

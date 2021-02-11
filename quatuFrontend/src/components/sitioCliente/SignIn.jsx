@@ -91,7 +91,7 @@ export default function SignIn(props) {
   }
   const handleLogin=(event) => {
     event.preventDefault(); 
-    var role="",id="", idTienda="";
+    //var role="",id="", idTienda="";
     var baseURL = `/api/login`;
     
     if(validateData()){
@@ -99,7 +99,7 @@ export default function SignIn(props) {
 
         axios.get(baseURL,
           {params:{
-            nombreUsuario:User.nombreUsuario,
+            nombreUsuario:User.nombreUsuario.trim(),
             contraseña:User.contraseña}
           })
           .then(res => {
@@ -137,6 +137,7 @@ export default function SignIn(props) {
           })
           .catch(error => {
             console.error('There was an error!', error);
+            alert("vuelva a intentarlo")
           });
     }else{
       alert("Vuelva a intentarlo")

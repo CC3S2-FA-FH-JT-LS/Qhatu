@@ -103,6 +103,7 @@ export default function SignIn() {
           })
           .then(res => {
             console.log(res.data);
+            var role,id,idTienda,nombre,imagen;
             if(res.data.ok === false){
               alert("Usuario o contraseña incorrecta");
             }else if(res.data.ok){
@@ -113,15 +114,20 @@ export default function SignIn() {
                 alert("comerciante")
                 history.push('/comerciantes')
                 id = res.data.comerciante._id;
-                idTienda = res.data.comerciante.tiendaId;  
+                idTienda = res.data.comerciante.tiendaId;
+                nombre=res.data.comerciante.nombre;  
               }else if(role === "consumidor"){
                 alert("consumidor")
                 history.push('/consumidor')
                 id = res.data.consumidor._id;  
+                nombre=res.data.consumidor.nombre;
+                imagen=res.data.consumidor.imagen;
+                localStorage.setItem('myImage',imagen);
               }
               localStorage.setItem('myRole',role);
               localStorage.setItem('myId',id);
               localStorage.setItem('myStore',id);
+              localStorage.setItem('myName',nombre);
             }else{
               alert("Usuario no registrado");
             }

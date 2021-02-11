@@ -14,7 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../../App.css";
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, BrowserRouter as Router, Switch, Route} from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center" >
@@ -110,23 +111,23 @@ export default function SignIn() {
               alert("Login correcto");
               role=res.data.rol;
               console.log(res.data);
+              localStorage.setItem('myRole',role);
               if(role==="comerciante"){
                 alert("comerciante")
-                history.push('/comerciantes')
                 id = res.data.comerciante._id;
                 idTienda = res.data.comerciante.tiendaId;
-                nombre=res.data.comerciante.nombre;  
+                nombre=res.data.comerciante.nombre; 
+                localStorage.setItem('myStore',idTienda);   
+                history.push('/comerciantes')
               }else if(role === "consumidor"){
                 alert("consumidor")
-                history.push('/consumidor')
                 id = res.data.consumidor._id;  
                 nombre=res.data.consumidor.nombre;
                 imagen=res.data.consumidor.imagen;
                 localStorage.setItem('myImage',imagen);
+                history.push('/consumidor')
               }
-              localStorage.setItem('myRole',role);
               localStorage.setItem('myId',id);
-              localStorage.setItem('myStore',id);
               localStorage.setItem('myName',nombre);
             }else{
               alert("Usuario no registrado");

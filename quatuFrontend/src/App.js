@@ -51,7 +51,7 @@ export default function App() {
             <Route path="/editarCuenta">
               <EditarCuenta/>
             </Route>
-            <Route path={["/home", "/", "/clientes"]}>
+            <Route path={["/home", "/", "/clientes","consumidor"]}>
               <BuscarTiendas />
             </Route>
           </Switch>

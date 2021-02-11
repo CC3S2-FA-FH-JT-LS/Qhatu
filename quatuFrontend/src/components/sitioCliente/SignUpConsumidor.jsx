@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
+    padding: "20"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -127,7 +128,7 @@ export default function SignUpConsumidor() {
     });
   }
   return (
-    <div className={`gradient-bg `} >
+    <div  >
       <Container component="main" maxWidth="xs" className={`${classes.container}`}>
       <CssBaseline />
       <div className={classes.paper}>

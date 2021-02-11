@@ -10,7 +10,7 @@ exports.login = async (req, res) => {
   const params = req.query;
   console.log(params);
   const nombreUsuario = params.nombreUsuario;
-  const contraseña = params.password;
+  const contraseña = params.contraseña;
   let isConsumidor = true;
   let isComerciante = true;
 
